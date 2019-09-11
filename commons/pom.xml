@@ -11,5 +11,13 @@
 
 	<artifactId>open-island-commons</artifactId>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.jukusoft</groupId>
+			<artifactId>engine2d-core</artifactId>
+			<version>${game.engine.version}</version>
+		</dependency>
+	</dependencies>
+
 
 </project>
