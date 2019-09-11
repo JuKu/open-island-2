@@ -14,12 +14,7 @@ public class GameFactory implements BaseGameFactory {
         return new BaseGame(GameFactory.class) {
             @Override
             protected PluginApi createPluginApi() {
-                return new PluginApi() {
-                    @Override
-                    public Game getGame() {
-                        return null;
-                    }
-                };
+                return () -> null;
             }
 
             @Override
