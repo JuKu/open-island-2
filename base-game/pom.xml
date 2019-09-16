@@ -18,6 +18,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.jukusoft</groupId>
+			<artifactId>engine2d-input</artifactId>
+			<version>${game.engine.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jukusoft</groupId>
 			<artifactId>engine2d-desktop</artifactId>
 			<version>${game.engine.version}</version>
 		</dependency>
