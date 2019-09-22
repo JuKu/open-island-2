@@ -10,6 +10,7 @@ import com.jukusoft.engine2d.core.subsystem.SubSystemManager;
 import com.jukusoft.engine2d.core.utils.Threads;
 import com.jukusoft.engine2d.input.subsystem.InputSubSystem;
 import com.jukusoft.engine2d.plugin.PluginApi;
+import com.jukusoft.engine2d.view.subsystem.ScreenSubSystem;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -37,7 +38,14 @@ public class GameFactory implements BaseGameFactory {
                     manager.addSubSystem(new EventProcessor(Threads.LOGIC_THREAD, 10), Threads.LOGIC_THREAD);
                     manager.addSubSystem(new EventProcessor(Threads.NETWORK_THREAD, 10), Threads.NETWORK_THREAD);
 
-                    //TODO: add subsystems here
+                    //TODO: add network layer
+                    //manager.addSubSystem(new NetworkView(), true);
+
+                    //TODO: add game-logic-layer
+                    //manager.addSubSystem(new GameLogicLayer(), true);
+
+                    //add game-view-layer / human views
+                    manager.addSubSystem(new ScreenSubSystem(), Threads.UI_THREAD);
                 };
             }
 
