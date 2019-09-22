@@ -11,6 +11,8 @@
 	<modules>
 		<module>base-game</module>
 		<module>commons</module>
+		<module>game-view</module>
+		<module>game-logic</module>
 	</modules>
 
 	<name>Open Island Game</name>
