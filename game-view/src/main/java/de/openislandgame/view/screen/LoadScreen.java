@@ -32,12 +32,12 @@ public class LoadScreen implements IScreen {
 
     @Override
     public void update(ScreenManager<IScreen> screenManager) {
-        System.out.println("update");
+        //
     }
 
     @Override
     public void draw() {
-        System.out.println("draw");
+        //
     }
 
 }
