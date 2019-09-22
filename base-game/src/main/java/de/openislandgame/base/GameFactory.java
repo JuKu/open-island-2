@@ -11,6 +11,7 @@ import com.jukusoft.engine2d.core.utils.Threads;
 import com.jukusoft.engine2d.input.subsystem.InputSubSystem;
 import com.jukusoft.engine2d.plugin.PluginApi;
 import com.jukusoft.engine2d.view.subsystem.ScreenSubSystem;
+import de.openislandgame.view.subsystem.ScreenSubSystemFactory;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -45,7 +46,7 @@ public class GameFactory implements BaseGameFactory {
                     //manager.addSubSystem(new GameLogicLayer(), true);
 
                     //add game-view-layer / human views
-                    manager.addSubSystem(new ScreenSubSystem(), Threads.UI_THREAD);
+                    manager.addSubSystem(ScreenSubSystemFactory.create(), Threads.UI_THREAD);
                 };
             }
 
