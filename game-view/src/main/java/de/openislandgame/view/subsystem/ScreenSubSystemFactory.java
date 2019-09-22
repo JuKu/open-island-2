@@ -6,6 +6,8 @@ import com.jukusoft.engine2d.view.subsystem.ScreenSubSystem;
 import de.openislandgame.view.screen.LoadScreen;
 import de.openislandgame.view.screen.Screens;
 
+import java.util.Objects;
+
 public class ScreenSubSystemFactory {
 
     private ScreenSubSystemFactory() {
@@ -15,6 +17,7 @@ public class ScreenSubSystemFactory {
     public static ScreenSubSystem create() {
         ScreenSubSystem screenSubSystem = new ScreenSubSystem();
         ScreenManager<IScreen> screenManager = screenSubSystem.getScreenManager();
+        Objects.requireNonNull(screenManager, "screen manager cannot be null");
 
         screenManager.addScreen(Screens.LOADING_SCREEN, new LoadScreen());
         //TODO: add screens

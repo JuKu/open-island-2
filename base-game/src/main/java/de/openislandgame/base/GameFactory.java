@@ -4,8 +4,10 @@ import com.jukusoft.engine2d.applayer.BaseGame;
 import com.jukusoft.engine2d.applayer.BaseGameFactory;
 import com.jukusoft.engine2d.applayer.game.BasicGame;
 import com.jukusoft.engine2d.basegame.Game;
+import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.core.shutdown.ErrorHandler;
 import com.jukusoft.engine2d.core.subsystem.EventProcessor;
+import com.jukusoft.engine2d.core.subsystem.SubSystem;
 import com.jukusoft.engine2d.core.subsystem.SubSystemManager;
 import com.jukusoft.engine2d.core.utils.Threads;
 import com.jukusoft.engine2d.input.subsystem.InputSubSystem;
@@ -29,6 +31,7 @@ public class GameFactory implements BaseGameFactory {
             @Override
             protected Consumer<SubSystemManager> addSubSystems() {
                 return manager -> {
+                    Log.i(GameFactory.class.getSimpleName(), "create subsystems");
                     Objects.requireNonNull(manager);
 
                     //add input manager
