@@ -38,6 +38,10 @@
 			<organization>none</organization>
 			<organizationUrl>http://jukusoft.com</organizationUrl>
 		</developer>
+		<developer>
+		    <name>David Stein</name>
+		    <email>davidstein2@gmx.de</name>
+		</developer>
 	</developers>
 
 	<distributionManagement>
