@@ -11,5 +11,19 @@
 
 	<artifactId>open-island-logic</artifactId>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.jukusoft</groupId>
+			<artifactId>open-island-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jukusoft</groupId>
+			<artifactId>engine2d-base-game</artifactId>
+			<version>${game.engine.version}</version>
+		</dependency>
+	</dependencies>
+
 
 </project>

@@ -24,14 +24,20 @@
 
 		<dependency>
 			<groupId>com.jukusoft</groupId>
-			<artifactId>engine2d-game-view</artifactId>
+			<artifactId>engine2d-desktop</artifactId>
 			<version>${game.engine.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.jukusoft</groupId>
-			<artifactId>engine2d-desktop</artifactId>
-			<version>${game.engine.version}</version>
+			<artifactId>open-island-logic</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jukusoft</groupId>
+			<artifactId>open-island-view</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
