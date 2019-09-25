@@ -6,5 +6,5 @@ package de.openislandgame.view.screen;
 public class Screens {
 
     public static final String LOADING_SCREEN = "load_game_screen";
-
+    public static final String MAIN_MENU_SCREEN = "main_menu_screen";
 }

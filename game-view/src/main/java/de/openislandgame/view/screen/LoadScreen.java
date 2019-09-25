@@ -33,6 +33,7 @@ public class LoadScreen implements IScreen {
     @Override
     public void update(ScreenManager<IScreen> screenManager) {
         //
+
     }
 
     @Override
