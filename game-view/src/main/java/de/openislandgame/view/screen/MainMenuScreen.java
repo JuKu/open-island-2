@@ -1,6 +1,7 @@
 package de.openislandgame.view.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,7 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 
@@ -38,24 +41,21 @@ public class MainMenuScreen implements IScreen {
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(800, 600, camera);
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         viewport.apply();
 
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
         camera.update();
 
-        stage = new Stage(viewport, batch);
+        //stage = new Stage(viewport, batch);
+        stage = new Stage(new ScreenViewport());
         // end init stuff
-
-        // do scene2d stuff
-        Gdx.input.setInputProcessor(stage);
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
         rootTable.center();
 
         Table menuTable = new Table();
-        rootTable.add(menuTable);
 
         // continue button setup
         TextButton continueButton = new TextButton("Continue", skin);
@@ -127,34 +127,82 @@ public class MainMenuScreen implements IScreen {
         });
         menuTable.add(exitButton).size(buttonWidth, buttonHeight);
 
+        rootTable.add(menuTable);
         stage.addActor(rootTable);
     }
 
     @Override
     public void onStop() {
-
+        stage.dispose();
     }
 
     @Override
     public void onResume() {
+        System.err.println("onResume()");
 
+        // do scene2d stuff
+        InputManager.getInstance().addFirst(stage);
+        //InputManager.getInstance().setGdxInputProcessor();
     }
 
     @Override
     public void onPause() {
+        System.err.println("onPause()");
 
+        InputManager.getInstance().remove(stage);
+        InputManager.getInstance().addFirst(new InputProcessor() {
+            @Override
+            public boolean keyDown(int keycode) {
+                return false;
+            }
+
+            @Override
+            public boolean keyUp(int keycode) {
+                return false;
+            }
+
+            @Override
+            public boolean keyTyped(char character) {
+                return false;
+            }
+
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                return false;
+            }
+
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                return false;
+            }
+
+            @Override
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                return false;
+            }
+
+            @Override
+            public boolean mouseMoved(int screenX, int screenY) {
+                System.err.println("mouseX: " + screenX + ", mouseY: " + screenY);
+                return false;
+            }
+
+            @Override
+            public boolean scrolled(int amount) {
+                return false;
+            }
+        });
     }
 
     @Override
-    public void onResize(int i, int i1) {
-
+    public void onResize(int width, int height) {
+        System.err.println("onResize()");
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
     public void update(ScreenManager<IScreen> screenManager) {
-
-
-
+        //
     }
 
     @Override
