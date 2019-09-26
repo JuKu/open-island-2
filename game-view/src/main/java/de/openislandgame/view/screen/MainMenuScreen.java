@@ -140,7 +140,6 @@ public class MainMenuScreen implements IScreen {
     public void onResume() {
         // do scene2d stuff
         InputManager.getInstance().addFirst(stage);
-        //InputManager.getInstance().setGdxInputProcessor();
     }
 
     @Override
