@@ -47,8 +47,8 @@ public class MainMenuScreen implements IScreen {
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
         camera.update();
 
-        //stage = new Stage(viewport, batch);
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(viewport, batch);
+        //stage = new Stage(new ScreenViewport());
         // end init stuff
 
         Table rootTable = new Table();
