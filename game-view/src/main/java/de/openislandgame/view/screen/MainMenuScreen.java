@@ -53,6 +53,7 @@ public class MainMenuScreen implements IScreen {
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
+        rootTable.center();
 
         Table menuTable = new Table();
 
@@ -126,24 +127,8 @@ public class MainMenuScreen implements IScreen {
         });
         menuTable.add(exitButton).size(buttonWidth, buttonHeight);
 
-        menuTable.center();
-        rootTable.center();
         rootTable.add(menuTable);
-
-        TextButton btn = new TextButton("test", skin);
-        btn.setDisabled(false);
-        btn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (btn.isDisabled()) return;
-
-                System.err.println("click!");
-            }
-        });
-        stage.addActor(btn);
-
-        //TODO: remove this line, if onResume() works as expected
-        InputManager.getInstance().addFirst(stage);
+        stage.addActor(rootTable);
     }
 
     @Override
@@ -153,8 +138,6 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onResume() {
-        System.err.println("onResume()");
-
         // do scene2d stuff
         InputManager.getInstance().addFirst(stage);
         //InputManager.getInstance().setGdxInputProcessor();
@@ -162,8 +145,6 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onPause() {
-        System.err.println("onPause()");
-
         InputManager.getInstance().remove(stage);
     }
 

@@ -29,7 +29,7 @@ public class ScreenSubSystemFactory {
         screenManager.addScreen(Screens.TEST_SCREEN, new TestScreen());
 
         //set activated screen
-        screenManager.leaveAllAndEnter(Screens.TEST_SCREEN);
+        screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
 
         return screenSubSystem;
     }
