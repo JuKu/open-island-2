@@ -53,7 +53,6 @@ public class MainMenuScreen implements IScreen {
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.center();
 
         Table menuTable = new Table();
 
@@ -127,8 +126,24 @@ public class MainMenuScreen implements IScreen {
         });
         menuTable.add(exitButton).size(buttonWidth, buttonHeight);
 
+        menuTable.center();
+        rootTable.center();
         rootTable.add(menuTable);
-        stage.addActor(rootTable);
+
+        TextButton btn = new TextButton("test", skin);
+        btn.setDisabled(false);
+        btn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (btn.isDisabled()) return;
+
+                System.err.println("click!");
+            }
+        });
+        stage.addActor(btn);
+
+        //TODO: remove this line, if onResume() works as expected
+        InputManager.getInstance().addFirst(stage);
     }
 
     @Override
@@ -150,48 +165,6 @@ public class MainMenuScreen implements IScreen {
         System.err.println("onPause()");
 
         InputManager.getInstance().remove(stage);
-        InputManager.getInstance().addFirst(new InputProcessor() {
-            @Override
-            public boolean keyDown(int keycode) {
-                return false;
-            }
-
-            @Override
-            public boolean keyUp(int keycode) {
-                return false;
-            }
-
-            @Override
-            public boolean keyTyped(char character) {
-                return false;
-            }
-
-            @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                return false;
-            }
-
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                return false;
-            }
-
-            @Override
-            public boolean touchDragged(int screenX, int screenY, int pointer) {
-                return false;
-            }
-
-            @Override
-            public boolean mouseMoved(int screenX, int screenY) {
-                System.err.println("mouseX: " + screenX + ", mouseY: " + screenY);
-                return false;
-            }
-
-            @Override
-            public boolean scrolled(int amount) {
-                return false;
-            }
-        });
     }
 
     @Override

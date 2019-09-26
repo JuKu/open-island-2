@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 
@@ -49,10 +50,14 @@ public class TestScreen implements IScreen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 bgColor = Color.BLACK;
+
+                System.err.println("test");
             }
         });
 
         stage.addActor(newGameButton);
+
+        InputManager.getInstance().addFirst(stage);
     }
 
     @Override
