@@ -26,17 +26,17 @@ public class LoadScreen implements IScreen {
     }
 
     @Override
-    public void onResize(int i, int i1) {
+    public void onResize(int oldWidth, int oldHeight, int newWidth, int newHeight) {
 
     }
 
     @Override
-    public void update(ScreenManager<IScreen> screenManager) {
+    public void update(ScreenManager<IScreen> screenManager, float delta) {
         //
     }
 
     @Override
-    public void draw() {
+    public void draw(float delta) {
         //
     }
 
