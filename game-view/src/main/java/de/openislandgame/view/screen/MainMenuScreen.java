@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.basegame.replay.ReplayMode;
+import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
@@ -30,7 +32,7 @@ public class MainMenuScreen implements IScreen {
     private OrthographicCamera camera;
     private TextureAtlas atlas;
     private Skin skin;
-    private final int buttonWidth = 200;
+    private final int buttonWidth = 250;
     private final int buttonHeight = 50;
     private final int buttonPad = 10;
     private final int menuRightPad = 50;
@@ -128,10 +130,18 @@ public class MainMenuScreen implements IScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                bgColor = Color.YELLOW;
+                screenManager.leaveAllAndEnter(Screens.CREDITS_SCREEN);
             }
         });
         menuTable.add(creditsButton).size(buttonWidth, buttonHeight).pad(buttonPad);
+        menuTable.row();
+
+        // replay button
+        TextButton replayButton = new TextButton("Replay", skin);
+        replayButton.addListener(new ClickListener(){
+
+        });
+        menuTable.add(replayButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // exit button setup

@@ -6,9 +6,9 @@
   - David
   
 ## Developer
-
+  - Justin
+  - David
 ...
 
 ## Assets
-
   - ...
