@@ -3,10 +3,7 @@ package de.openislandgame.view.subsystem;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import com.jukusoft.engine2d.view.subsystem.ScreenSubSystem;
-import de.openislandgame.view.screen.CreditsScreen;
-import de.openislandgame.view.screen.LoadScreen;
-import de.openislandgame.view.screen.MainMenuScreen;
-import de.openislandgame.view.screen.Screens;
+import de.openislandgame.view.screen.*;
 
 import java.util.Objects;
 

@@ -137,12 +137,16 @@ public class MainMenuScreen implements IScreen {
         menuTable.row();
 
         // replay button
-        TextButton replayButton = new TextButton("Replay", skin);
-        replayButton.addListener(new ClickListener(){
+        if (Config.getBool("Replay", "enabled")){
 
-        });
-        menuTable.add(replayButton).size(buttonWidth, buttonHeight).pad(buttonPad);
-        menuTable.row();
+            TextButton replayButton = new TextButton("Replay", skin);
+            replayButton.addListener(new ClickListener() {
+            });
+
+            menuTable.add(replayButton).size(buttonWidth, buttonHeight).pad(buttonPad);
+            menuTable.row();
+        }
+
 
         // exit button setup
         TextButton exitButton = new TextButton("Exit Game", skin);
@@ -150,7 +154,7 @@ public class MainMenuScreen implements IScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                bgColor = Color.BROWN;
+                Gdx.app.exit();
             }
         });
         menuTable.add(exitButton).size(buttonWidth, buttonHeight).pad(buttonPad);
@@ -193,14 +197,11 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void draw(float delta) {
-        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(bgImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
-
 
         stage.act(delta);
         stage.draw();
