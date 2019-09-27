@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -29,9 +30,12 @@ public class MainMenuScreen implements IScreen {
     private OrthographicCamera camera;
     private TextureAtlas atlas;
     private Skin skin;
-    private final int buttonWidth = 150;
+    private final int buttonWidth = 200;
     private final int buttonHeight = 50;
+    private final int buttonPad = 10;
+    private final int menuRightPad = 50;
     private Color bgColor = Color.BLUE;
+    private Texture bgImage;
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
@@ -42,6 +46,7 @@ public class MainMenuScreen implements IScreen {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        bgImage = new Texture("./data/test/bg/shipwallpaper.jpg");
         viewport.apply();
 
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
@@ -53,16 +58,20 @@ public class MainMenuScreen implements IScreen {
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.center();
+        rootTable.right().padRight(menuRightPad);
 
         Table menuTable = new Table();
 
         // continue button setup
         TextButton continueButton = new TextButton("Continue", skin);
         continueButton.addListener(new ClickListener(){
-
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                bgColor = Color.BLACK;
+            }
         });
-        menuTable.add(continueButton).size(buttonWidth, buttonHeight);
+        menuTable.add(continueButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // new game button setup
@@ -70,18 +79,23 @@ public class MainMenuScreen implements IScreen {
         newGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                bgColor = Color.BLACK;
+                super.clicked(event, x, y);
+                bgColor = Color.CYAN;
             }
         });
-        menuTable.add(newGameButton).size(buttonWidth, buttonHeight);
+        menuTable.add(newGameButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // load game button setup
         TextButton loadGameButton = new TextButton("Load Game", skin);
         loadGameButton.addListener(new ClickListener(){
-
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                bgColor = Color.RED;
+            }
         });
-        menuTable.add(loadGameButton).size(buttonWidth, buttonHeight);
+        menuTable.add(loadGameButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // campaign button setup
@@ -89,10 +103,11 @@ public class MainMenuScreen implements IScreen {
         campaignButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                bgColor = Color.RED;
+                super.clicked(event, x, y);
+                bgColor = Color.BLUE;
             }
         });
-        menuTable.add(campaignButton).size(buttonWidth, buttonHeight);
+        menuTable.add(campaignButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // settings button setup
@@ -100,10 +115,11 @@ public class MainMenuScreen implements IScreen {
         settingsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                bgColor = Color.RED;
+                super.clicked(event, x, y);
+                bgColor = Color.GREEN;
             }
         });
-        menuTable.add(settingsButton).size(buttonWidth, buttonHeight);
+        menuTable.add(settingsButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // credits button setup
@@ -111,10 +127,11 @@ public class MainMenuScreen implements IScreen {
         creditsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                bgColor = Color.RED;
+                super.clicked(event, x, y);
+                bgColor = Color.YELLOW;
             }
         });
-        menuTable.add(creditsButton).size(buttonWidth, buttonHeight);
+        menuTable.add(creditsButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // exit button setup
@@ -122,13 +139,16 @@ public class MainMenuScreen implements IScreen {
         exitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                bgColor = Color.RED;
+                super.clicked(event, x, y);
+                bgColor = Color.BROWN;
             }
         });
-        menuTable.add(exitButton).size(buttonWidth, buttonHeight);
+        menuTable.add(exitButton).size(buttonWidth, buttonHeight).pad(buttonPad);
 
         rootTable.add(menuTable);
         stage.addActor(rootTable);
+
+        InputManager.getInstance().addFirst(stage);
     }
 
     @Override
@@ -138,8 +158,12 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onResume() {
-        // do scene2d stuff
-        InputManager.getInstance().addFirst(stage);
+        InputManager inputManager = InputManager.getInstance();
+
+        if (inputManager.contains(stage)){
+            inputManager.remove(stage);
+        }
+        inputManager.addFirst(stage);
     }
 
     @Override
@@ -161,6 +185,12 @@ public class MainMenuScreen implements IScreen {
     public void draw(float delta) {
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(bgImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.end();
+
 
         stage.act(delta);
         stage.draw();
