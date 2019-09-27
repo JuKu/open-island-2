@@ -148,22 +148,22 @@ public class MainMenuScreen implements IScreen {
     }
 
     @Override
-    public void onResize(int width, int height) {
+    public void onResize(int oldWidth, int oldHeight, int newWidth, int newHeight) {
         System.err.println("onResize()");
-        stage.getViewport().update(width, height, true);
+        stage.getViewport().update(newWidth, newHeight, true);
     }
 
     @Override
-    public void update(ScreenManager<IScreen> screenManager) {
+    public void update(ScreenManager<IScreen> screenManager, float delta) {
         //
     }
 
     @Override
-    public void draw() {
+    public void draw(float delta) {
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act();
+        stage.act(delta);
         stage.draw();
     }
 }
