@@ -149,7 +149,6 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onResize(int oldWidth, int oldHeight, int newWidth, int newHeight) {
-        System.err.println("onResize()");
         stage.getViewport().update(newWidth, newHeight, true);
     }
 
