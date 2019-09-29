@@ -1,34 +1,24 @@
 package de.openislandgame.view.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
-import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.buttons.MenuButton;
-
-import java.awt.*;
-
 
 public class MainMenuScreen implements IScreen {
     private SpriteBatch batch;
@@ -44,13 +34,20 @@ public class MainMenuScreen implements IScreen {
 
     // menu padding
     private final int menuRightPad = 50;
+
+    // background texture
     private Texture bgImage;
+
+    // music
+    private Music music;
 
     // click sound path
     private static final String BUTTON_ATLAS_PATH = "./data/test/ui/uiskin.atlas";
     private static final String BUTTON_SKIN_PATH = "./data/test/ui/uiskin.json";
     private static final String SELECT_SOUND_PATH = "./data/test/sound/menu_selection_click/menu_selection_click_16bit.wav";
     private static final String BGIMAGE_PATH = "./data/test/bg/shipwallpaper.jpg";
+    private static final String MUSIC_PATH = "./data/test/music/SnowyForest.mp3";
+
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
         // start init stuff
@@ -67,27 +64,14 @@ public class MainMenuScreen implements IScreen {
         camera.update();
 
         stage = new Stage(viewport, batch);
-        //stage = new Stage(new ScreenViewport());
+
+        // load music
+        music = Gdx.audio.newMusic(Gdx.files.internal(MUSIC_PATH));
+        music.play();
+
         // end init stuff
         Sound hoverSound = Gdx.audio.newSound(Gdx.files.internal(SELECT_SOUND_PATH));
-        ClickListener hoverListener = new ClickListener(){
-            boolean playing = false;
 
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                if (!playing){
-                    hoverSound.play(1F);
-                    playing = true;
-                }
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                playing = false;
-            }
-        };
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
@@ -127,7 +111,7 @@ public class MainMenuScreen implements IScreen {
         menuTable.row();
 
         // replay button
-        if (Config.getBool("Replay", "enabled")){
+        if (ReplayMode.isEnabled()){
             MenuButton replayButton = new MenuButton("Replay", skin, hoverSound);
             menuTable.add(replayButton).size(buttonWidth, buttonHeight).pad(buttonPad);
             menuTable.row();
@@ -153,11 +137,14 @@ public class MainMenuScreen implements IScreen {
     @Override
     public void onStop() {
         stage.dispose();
+        music.dispose();
     }
 
     @Override
     public void onResume() {
         InputManager inputManager = InputManager.getInstance();
+
+        music.play();
 
         if (inputManager.contains(stage)){
             inputManager.remove(stage);
@@ -167,6 +154,8 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onPause() {
+        music.stop();
+
         InputManager.getInstance().remove(stage);
     }
 
