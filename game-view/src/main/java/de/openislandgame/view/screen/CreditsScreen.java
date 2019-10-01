@@ -61,17 +61,17 @@ public class CreditsScreen implements IScreen {
     }
 
     @Override
-    public void onStop() {
+    public void onStop(ScreenManager<IScreen> screenManager) {
 
     }
 
     @Override
-    public void onResume() {
+    public void onResume(ScreenManager<IScreen> screenManager) {
         startY = 0;
     }
 
     @Override
-    public void onPause() {
+    public void onPause(ScreenManager<IScreen> screenManager) {
 
     }
 

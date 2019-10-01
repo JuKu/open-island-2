@@ -135,13 +135,13 @@ public class MainMenuScreen implements IScreen {
     }
 
     @Override
-    public void onStop() {
+    public void onStop(ScreenManager<IScreen> screenManager) {
         stage.dispose();
         music.dispose();
     }
 
     @Override
-    public void onResume() {
+    public void onResume(ScreenManager<IScreen> screenManager) {
         InputManager inputManager = InputManager.getInstance();
 
         music.play();
@@ -153,7 +153,7 @@ public class MainMenuScreen implements IScreen {
     }
 
     @Override
-    public void onPause() {
+    public void onPause(ScreenManager<IScreen> screenManager) {
         music.stop();
 
         InputManager.getInstance().remove(stage);
