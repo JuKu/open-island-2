@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
 import com.jukusoft.engine2d.input.InputManager;
@@ -41,6 +42,9 @@ public class MainMenuScreen implements IScreen {
     // music
     private Music music;
 
+    // clicking sound for button hover
+    Sound hoverSound;
+
     // click sound path
     private static final String BUTTON_ATLAS_PATH = "./data/test/ui/uiskin.atlas";
     private static final String BUTTON_SKIN_PATH = "./data/test/ui/uiskin.json";
@@ -50,18 +54,29 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
-        // start init stuff
-        atlas = new TextureAtlas(BUTTON_ATLAS_PATH);
-        skin = new Skin(Gdx.files.internal(BUTTON_SKIN_PATH), atlas);
 
+    }
+
+    @Override
+    public void onStop(ScreenManager<IScreen> screenManager) {
+        // on stop and on pause are the same
+        onPause(screenManager);
+    }
+
+    @Override
+    public void onResume(ScreenManager<IScreen> screenManager) {
+        // init batch, camera, viewport and background image
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        viewport = new ScreenViewport(camera);
         bgImage = new Texture(BGIMAGE_PATH);
         viewport.apply();
-
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
         camera.update();
+
+        // init button skin
+        atlas = new TextureAtlas(BUTTON_ATLAS_PATH);
+        skin = new Skin(Gdx.files.internal(BUTTON_SKIN_PATH), atlas);
 
         stage = new Stage(viewport, batch);
 
@@ -70,8 +85,7 @@ public class MainMenuScreen implements IScreen {
         music.play();
 
         // end init stuff
-        Sound hoverSound = Gdx.audio.newSound(Gdx.files.internal(SELECT_SOUND_PATH));
-
+        hoverSound = Gdx.audio.newSound(Gdx.files.internal(SELECT_SOUND_PATH));
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
@@ -132,31 +146,31 @@ public class MainMenuScreen implements IScreen {
         stage.addActor(rootTable);
 
         InputManager.getInstance().addFirst(stage);
-    }
 
-    @Override
-    public void onStop(ScreenManager<IScreen> screenManager) {
-        stage.dispose();
-        music.dispose();
-    }
-
-    @Override
-    public void onResume(ScreenManager<IScreen> screenManager) {
-        InputManager inputManager = InputManager.getInstance();
-
-        music.play();
-
-        if (inputManager.contains(stage)){
-            inputManager.remove(stage);
-        }
-        inputManager.addFirst(stage);
     }
 
     @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
+        // stop and dispose music and stage
         music.stop();
+        music.dispose();
 
+        // dispose hover sound
+        hoverSound.dispose();
+
+        // dispose background
+        bgImage.dispose();
+
+        // dispose button skins
+        skin.dispose();
+        atlas.dispose();
+
+        // remove stage from input manager and dispose
         InputManager.getInstance().remove(stage);
+        stage.dispose();
+
+        // dispose batch
+        batch.dispose();
     }
 
     @Override

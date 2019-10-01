@@ -3,11 +3,14 @@ package de.openislandgame.view.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.core.utils.FileUtils;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
@@ -28,6 +31,9 @@ public class CreditsScreen implements IScreen {
     private final Color textColor = Color.WHITE;
 
     private SpriteBatch batch;
+    private OrthographicCamera camera;
+    private Viewport viewport;
+
     private final int startX = 50;
     private int startY;
     private final float textSpeed = 1;
@@ -38,20 +44,6 @@ public class CreditsScreen implements IScreen {
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
-        batch = new SpriteBatch();
-        layout = new GlyphLayout();
-
-        startY = 0;
-
-        textFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
-        textFont.setColor(textColor);
-        sectionFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
-        sectionFont.setColor(textColor);
-        sectionFont.getData().setScale(1.25f);
-        titleFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
-        titleFont.setColor(textColor);
-        titleFont.getData().setScale(1.5f);
-
         try {
             generateCreditLines();
         }
@@ -67,17 +59,38 @@ public class CreditsScreen implements IScreen {
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
+        camera = new OrthographicCamera();
+        viewport = new ScreenViewport(camera);
+
+        batch = new SpriteBatch();
+        layout = new GlyphLayout();
+
         startY = 0;
+
+        textFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
+        textFont.setColor(textColor);
+        sectionFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
+        sectionFont.setColor(textColor);
+        sectionFont.getData().setScale(1.25f);
+        titleFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
+        titleFont.setColor(textColor);
+        titleFont.getData().setScale(1.5f);
+
     }
 
     @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
-
+        // dispose batch
+        batch.dispose();
+        // dispose fonts
+        textFont.dispose();
+        sectionFont.dispose();
+        titleFont.dispose();
     }
 
     @Override
     public void onResize(int oldWidth, int oldHeight, int newWidth, int newHeight) {
-
+        viewport.update(newWidth, newHeight, true);
     }
 
     @Override
