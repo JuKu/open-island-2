@@ -80,7 +80,7 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 
-		<game.engine.version>1.0.0-SNAPSHOT</game.engine.version>
+		<game.engine.version>1.0.1-SNAPSHOT</game.engine.version>
 
 		<!-- don't skip this module, instead deploy this module to maven central -->
 		<maven.deploy.skip>false</maven.deploy.skip>
