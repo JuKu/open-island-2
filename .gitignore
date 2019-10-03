@@ -430,3 +430,8 @@ gradle-app.setting
 temp
 data/test
 *.package
+
+data/dlc
+data/maindata
+data/mods
+data/plugins
