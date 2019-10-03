@@ -3,10 +3,7 @@ package de.openislandgame.view.subsystem;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import com.jukusoft.engine2d.view.subsystem.ScreenSubSystem;
-import de.openislandgame.view.screen.LoadScreen;
-import de.openislandgame.view.screen.MainMenuScreen;
-import de.openislandgame.view.screen.Screens;
-import de.openislandgame.view.screen.TestScreen;
+import de.openislandgame.view.screen.*;
 
 import java.util.Objects;
 
@@ -24,9 +21,7 @@ public class ScreenSubSystemFactory {
         screenManager.addScreen(Screens.LOADING_SCREEN, new LoadScreen());
         //TODO: add screens
         screenManager.addScreen(Screens.MAIN_MENU_SCREEN, new MainMenuScreen());
-
-        // TODO: remove this test screen
-        screenManager.addScreen(Screens.TEST_SCREEN, new TestScreen());
+        screenManager.addScreen(Screens.CREDITS_SCREEN, new CreditsScreen());
 
         //set activated screen
         screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
