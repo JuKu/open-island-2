@@ -29,6 +29,12 @@ public class LoadScreen implements IScreen {
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
+        initAssetManager();
+
+        //TODO: add code here
+    }
+
+    private void initAssetManager() {
         File baseGamePackPath = new File(Config.get("Gamepack", "base"));
         ZipFile zipFile = null;
 
