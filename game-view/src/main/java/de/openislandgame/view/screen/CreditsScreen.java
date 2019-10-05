@@ -36,7 +36,7 @@ public class CreditsScreen implements IScreen {
 
     private final int startX = 50;
     private int startY;
-    private final float textSpeed = 1;
+    private final float textSpeed = 100;
     private final float lineGap = 10;
 
     // credit lines
@@ -126,8 +126,7 @@ public class CreditsScreen implements IScreen {
         batch.end();
 
         // update start position
-        startY += textSpeed;
-
+        startY += textSpeed*delta;
     }
 
     private void generateCreditLines() throws IOException {
