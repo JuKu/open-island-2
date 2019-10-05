@@ -22,6 +22,7 @@ import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.buttons.MenuButton;
 
 public class MainMenuScreen implements IScreen {
+
     private SpriteBatch batch;
     private Stage stage;
     private Viewport viewport;
@@ -194,4 +195,5 @@ public class MainMenuScreen implements IScreen {
         stage.act(delta);
         stage.draw();
     }
+    
 }
