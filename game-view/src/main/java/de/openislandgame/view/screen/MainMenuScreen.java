@@ -1,6 +1,8 @@
 package de.openislandgame.view.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
@@ -34,6 +35,9 @@ public class MainMenuScreen implements IScreen {
     private final int buttonHeight = 50;
     private final int buttonPad = 10;
 
+    // asset manager for use in this screen
+    private AssetManager assetManager;
+
     // menu padding
     private final int menuPad = 50;
 
@@ -44,7 +48,7 @@ public class MainMenuScreen implements IScreen {
     private Music music;
 
     // clicking sound for button hover
-    Sound hoverSound;
+    private Sound hoverSound;
 
     // click sound path
     private static final String BUTTON_ATLAS_PATH = "./data/test/ui/uiskin.atlas";
@@ -66,6 +70,8 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
+        assetManager = new AssetManager();
+
         // init batch, camera, viewport and background image
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -74,19 +80,40 @@ public class MainMenuScreen implements IScreen {
         viewport.apply();
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
         camera.update();
+        stage = new Stage(viewport, batch);
 
         // init button skin
         atlas = new TextureAtlas(BUTTON_ATLAS_PATH);
         skin = new Skin(Gdx.files.internal(BUTTON_SKIN_PATH), atlas);
 
-        stage = new Stage(viewport, batch);
 
-        // load music
-        music = Gdx.audio.newMusic(Gdx.files.internal(MUSIC_PATH));
+        // load assets
+        assetManager.load(MUSIC_PATH, Music.class);
+        assetManager.load(BGIMAGE_PATH, Texture.class);
+        assetManager.load(SELECT_SOUND_PATH, Sound.class);
+        assetManager.load(BUTTON_ATLAS_PATH, TextureAtlas.class);
+        assetManager.load(BUTTON_SKIN_PATH, Skin.class, new SkinLoader.SkinParameter(BUTTON_ATLAS_PATH));
+
+        // wait
+        assetManager.finishLoadingAsset(MUSIC_PATH);
+        assetManager.finishLoadingAsset(BGIMAGE_PATH);
+        assetManager.finishLoadingAsset(SELECT_SOUND_PATH);
+        assetManager.finishLoadingAsset(BUTTON_ATLAS_PATH);
+        assetManager.finishLoadingAsset(BUTTON_SKIN_PATH);
+
+        // get music
+        music = assetManager.get(MUSIC_PATH, Music.class);
         music.play();
 
-        // end init stuff
-        hoverSound = Gdx.audio.newSound(Gdx.files.internal(SELECT_SOUND_PATH));
+        // get and set sound
+        hoverSound = assetManager.get(SELECT_SOUND_PATH);
+
+        // get and set bg image
+        bgImage = assetManager.get(BGIMAGE_PATH);
+
+        // get and set atlas and skin
+        atlas = assetManager.get(BUTTON_ATLAS_PATH);
+        skin = assetManager.get(BUTTON_SKIN_PATH);
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
@@ -172,6 +199,9 @@ public class MainMenuScreen implements IScreen {
 
         // dispose batch
         batch.dispose();
+
+        // dispose asset manager
+        assetManager.dispose();
     }
 
     @Override
