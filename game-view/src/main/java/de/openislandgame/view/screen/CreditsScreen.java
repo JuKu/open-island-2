@@ -1,14 +1,12 @@
 package de.openislandgame.view.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.core.utils.FileUtils;
@@ -42,6 +40,12 @@ public class CreditsScreen implements IScreen {
     // credit lines
     private String[] creditLines;
 
+    // asset paths
+    private static final String CREDITS_FONT_PATH = "./data/test/fonts/almfixed.fnt";
+
+    // asset manager
+    private AssetManager assetManager;
+
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
         try {
@@ -61,18 +65,23 @@ public class CreditsScreen implements IScreen {
     public void onResume(ScreenManager<IScreen> screenManager) {
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
-
         batch = new SpriteBatch();
+
         layout = new GlyphLayout();
 
         startY = 0;
 
-        textFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
+        assetManager = new AssetManager();
+
+        assetManager.load(CREDITS_FONT_PATH, BitmapFont.class);
+        assetManager.finishLoadingAsset(CREDITS_FONT_PATH);
+
+        textFont = assetManager.get(CREDITS_FONT_PATH);
         textFont.setColor(textColor);
-        sectionFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
+        sectionFont = assetManager.get(CREDITS_FONT_PATH);
         sectionFont.setColor(textColor);
         sectionFont.getData().setScale(1.25f);
-        titleFont = new BitmapFont(Gdx.files.internal("./data/test/fonts/almfixed.fnt"));
+        titleFont = assetManager.get(CREDITS_FONT_PATH);
         titleFont.setColor(textColor);
         titleFont.getData().setScale(1.5f);
 
@@ -86,6 +95,9 @@ public class CreditsScreen implements IScreen {
         textFont.dispose();
         sectionFont.dispose();
         titleFont.dispose();
+
+        // dispose asset manager
+        assetManager.dispose();
     }
 
     @Override
