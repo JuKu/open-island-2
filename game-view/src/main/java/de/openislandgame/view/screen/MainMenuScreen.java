@@ -76,7 +76,6 @@ public class MainMenuScreen implements IScreen {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
-        bgImage = new Texture(BGIMAGE_PATH);
         viewport.apply();
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
         camera.update();
@@ -219,7 +218,7 @@ public class MainMenuScreen implements IScreen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(bgImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(bgImage, 0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
         batch.end();
 
         stage.act(delta);
