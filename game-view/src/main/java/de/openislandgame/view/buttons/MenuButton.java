@@ -16,6 +16,9 @@ public class MenuButton extends TextButton {
 
     public MenuButton(String text, Skin skin, Sound hoverSound){
         super(text, skin);
+        getStyle().over = skin.getDrawable("default-rect");
+        getStyle().down = skin.getDrawable("default-rect");
+        getStyle().up = skin.getDrawable("default-round");
         setHoverSound(hoverSound);
     }
 

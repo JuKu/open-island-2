@@ -34,7 +34,7 @@ public class MainMenuScreen implements IScreen {
     private final int buttonPad = 10;
 
     // menu padding
-    private final int menuRightPad = 50;
+    private final int menuPad = 50;
 
     // background texture
     private Texture bgImage;
@@ -49,7 +49,7 @@ public class MainMenuScreen implements IScreen {
     private static final String BUTTON_ATLAS_PATH = "./data/test/ui/uiskin.atlas";
     private static final String BUTTON_SKIN_PATH = "./data/test/ui/uiskin.json";
     private static final String SELECT_SOUND_PATH = "./data/test/sound/menu_selection_click/menu_selection_click_16bit.wav";
-    private static final String BGIMAGE_PATH = "./data/test/bg/shipwallpaper.jpg";
+    private static final String BGIMAGE_PATH = "./data/test/bg/flat-field-bg2.jpg";
     private static final String MUSIC_PATH = "./data/test/music/SnowyForest.mp3";
 
     @Override
@@ -89,7 +89,7 @@ public class MainMenuScreen implements IScreen {
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.right().padRight(menuRightPad);
+        rootTable.left().pad(menuPad);
 
         Table menuTable = new Table();
 
