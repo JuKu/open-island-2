@@ -38,14 +38,20 @@ public class LoadScreen implements IScreen {
     private final float animationPad = 20;
     private float elapsedTime = 0;
 
+    // logo
+    private final float logoWidth = 150;
+    private final float logoHeight = 150;
+
     //local asset manager - only for use in this screen
     private AssetManager assetManager;
 
-    // bg texture
+    // textures
     private Texture bgImage;
+    private Texture logo;
 
     private static final String ANIMATION_PACK_PATH = "./data/test/loadscreen/AnimationLoadingScreen.pack";
     private static final String BGIMAGE_PATH = "./data/test/bg/field-bg2-blurred.jpg";
+    private static final String LOGO_PATH = "./data/test/logo/logo.png";
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
@@ -79,6 +85,10 @@ public class LoadScreen implements IScreen {
         assetManager.finishLoadingAsset(BGIMAGE_PATH);
         bgImage = assetManager.get(BGIMAGE_PATH);
 
+        assetManager.load(LOGO_PATH, Texture.class);
+        assetManager.finishLoadingAsset(LOGO_PATH);
+        logo = assetManager.get(LOGO_PATH);
+
         loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
 
         //TODO: add code here
@@ -105,6 +115,9 @@ public class LoadScreen implements IScreen {
         batch.dispose();
         atlas.dispose();
 
+        bgImage.dispose();
+        logo.dispose();
+
         assetManager.dispose();
         assetManager = null;
     }
@@ -122,20 +135,26 @@ public class LoadScreen implements IScreen {
 
     @Override
     public void draw(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //
         camera.update();
+
+        float viewportWidth = viewport.getScreenWidth();
+        float viewportHeight = viewport.getScreenHeight();
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(bgImage, 0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
-        elapsedTime += delta;
+        // batch.draw(bgImage, 0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
+        batch.draw(logo,
+                viewportWidth/2f - logoWidth/2f, viewportHeight/2f - logoHeight/2f,
+                logoWidth, logoHeight);
 
+        elapsedTime += delta;
         TextureRegion frame = loadingAnimation.getKeyFrame(elapsedTime, true);
-        float viewportWidth = viewport.getScreenWidth();
         batch.draw(
                 frame,
-                viewportWidth/2f - loadAnimationWidthAndHeight/2f,
+                viewportWidth- loadAnimationWidthAndHeight - animationPad,
                 animationPad, loadAnimationWidthAndHeight, loadAnimationWidthAndHeight);
 
         batch.end();
