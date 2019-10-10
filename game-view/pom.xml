@@ -24,12 +24,26 @@
 			<version>${game.engine.version}</version>
 		</dependency>
 
+
 		<dependency>
 			<groupId>com.jukusoft</groupId>
 			<artifactId>engine2d-game-view</artifactId>
 			<version>${game.engine.version}</version>
 		</dependency>
-	</dependencies>
+
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-freetype</artifactId>
+            <version>1.9.10</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jukusoft</groupId>
+            <artifactId>engine2d-input</artifactId>
+            <version>${game.engine.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>
