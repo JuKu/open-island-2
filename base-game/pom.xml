@@ -108,9 +108,10 @@
 							<resources>
 								<resource>
 									<directory>${basedir}/../../open-island-assets/generated</directory>
-									<filtering>true</filtering>
+									<filtering>false</filtering><!-- Do not filter files with binary content like images! This will most likely result in corrupt output.  -->
 								</resource>
 							</resources>
+							<overwrite>true</overwrite>
 						</configuration>
 					</execution>
 				</executions>
