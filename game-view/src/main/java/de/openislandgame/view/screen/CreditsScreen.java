@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.core.utils.FileUtils;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
@@ -50,9 +51,8 @@ public class CreditsScreen implements IScreen {
     public void onStart(ScreenManager<IScreen> screenManager) {
         try {
             generateCreditLines();
-        }
-        catch (IOException e){
-            e.printStackTrace();
+        } catch (IOException e){
+            Log.e(CreditsScreen.class.getSimpleName(), "IOException while generating credit lines: ", e);
         }
     }
 
