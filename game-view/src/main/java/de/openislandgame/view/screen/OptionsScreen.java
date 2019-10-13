@@ -85,15 +85,22 @@ public class OptionsScreen implements IScreen {
         atlas = assetManager.get(UI_ATLAS_PATH);
         skin = assetManager.get(UI_SKIN_PATH);
 
+        stage.setDebugAll(true);
+
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.center();
+        rootTable.left().top();
 
         Table menuTable = new Table();
-        menuTable.center().pad(100);
-        menuTable.setFillParent(true);
+        menuTable.left().top().pad(50);
 
-        Label musicVolumeLabel = new Label("Music Volume", skin);
+        Label volumeTitleLabel = new Label("Volume Settings", skin);
+        volumeTitleLabel.setFontScale(1.3f);
+
+        menuTable.add(volumeTitleLabel).colspan(2).left().expandX();
+        menuTable.row().height(50);
+
+        Label musicVolumeLabel = new Label("Music Volume: ", skin);
         Slider musicVolumeSlider = new Slider(0.0f, 1.0f, 0.01f, false, skin);
         TextField textField = new TextField(Integer.toString((int) musicVolumeSlider.getValue()*100), skin);
         textField.setSize(10, 20);
@@ -125,9 +132,9 @@ public class OptionsScreen implements IScreen {
             }
         });
 
-        menuTable.add(musicVolumeLabel);
-        menuTable.add(musicVolumeSlider);
-        menuTable.add(textField).size(100, 30);
+        menuTable.add(musicVolumeLabel).expandX().pad(10);
+        menuTable.add(musicVolumeSlider).pad(10);
+        menuTable.add(textField).size(100, 30).pad(10);
 
         menuTable.row();
 
@@ -186,9 +193,10 @@ public class OptionsScreen implements IScreen {
     public void draw(float delta) {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        batch.draw(bgImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        batch.begin();
+//        batch.draw(bgImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        batch.end();
 
         stage.act(delta);
         stage.draw();
