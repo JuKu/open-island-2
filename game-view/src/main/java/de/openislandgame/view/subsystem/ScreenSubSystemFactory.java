@@ -22,9 +22,10 @@ public class ScreenSubSystemFactory {
         //TODO: add screens
         screenManager.addScreen(Screens.MAIN_MENU_SCREEN, new MainMenuScreen());
         screenManager.addScreen(Screens.CREDITS_SCREEN, new CreditsScreen());
+        screenManager.addScreen(Screens.OPTIONS_SCREEN, new OptionsScreen());
 
         //set activated screen
-        screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
+        screenManager.leaveAllAndEnter(Screens.OPTIONS_SCREEN);
 
         return screenSubSystem;
     }
