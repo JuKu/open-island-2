@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,14 +16,21 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
+import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.buttons.MenuButton;
+import de.openislandgame.view.resolutions.Resolution;
+import de.openislandgame.view.selectboxes.ResolutionSelectBox;
+import de.openislandgame.view.settings.SettingsKeys;
+import de.openislandgame.view.slider.SettingsSlider;
+import de.openislandgame.view.textfields.SliderDisplayTextField;
 
 public class OptionsScreen implements IScreen {
     private SpriteBatch batch;
@@ -42,6 +50,16 @@ public class OptionsScreen implements IScreen {
     private static final String UI_SKIN_PATH = "./data/test/ui/uiskin.json";
     private static final String BGIMAGE_PATH = "./data/test/bg/flat-field-bg2.jpg";
     private static final String MUSIC_PATH = "./data/test/music/SnowyForest.mp3";
+
+    // display text field props
+    private static final int DISPLAY_TEXTFIELD_WIDTH = 100;
+    private static final int DISPLAY_TEXTFIELD_HEIGHT = 30;
+    private static final int CELL_PADDING = 10;
+    private static final int TABLE_PADDING = 50;
+    private static final int TOP_SECTION_LABEL_PADDING = 10;
+
+    // window pad
+    private static final int WINDOW_PADDING = 50;
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
@@ -88,58 +106,77 @@ public class OptionsScreen implements IScreen {
         stage.setDebugAll(true);
 
         Table rootTable = new Table();
+        rootTable.setBackground(new TextureRegionDrawable(bgImage));
         rootTable.setFillParent(true);
         rootTable.left().top();
 
         Table menuTable = new Table();
-        menuTable.left().top().pad(50);
+        // add background color
+        menuTable.setBackground(skin.getDrawable("default-window"));
+        menuTable.left().top().pad(TABLE_PADDING);
 
         Label volumeTitleLabel = new Label("Volume Settings", skin);
         volumeTitleLabel.setFontScale(1.3f);
 
-        menuTable.add(volumeTitleLabel).colspan(2).left().expandX();
-        menuTable.row().height(50);
+        menuTable.add(volumeTitleLabel).colspan(3).left().expandX();
+        menuTable.row().padTop(TOP_SECTION_LABEL_PADDING);
 
+        // Music Volume Setting
         Label musicVolumeLabel = new Label("Music Volume: ", skin);
-        Slider musicVolumeSlider = new Slider(0.0f, 1.0f, 0.01f, false, skin);
-        TextField textField = new TextField(Integer.toString((int) musicVolumeSlider.getValue()*100), skin);
-        textField.setSize(10, 20);
-        textField.setAlignment(Align.center);
-        textField.setDisabled(true);
-        textField.setMaxLength(3);
-        textField.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
-        textField.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) { String currentText = textField.getText();
-                float sliderValue;
-                if (currentText.isEmpty()){
-                    sliderValue = 0f;
-                }
-                else{
-                    sliderValue = Float.parseFloat(currentText)/100f;
-                }
+        SettingsSlider musicVolumeSlider = new SettingsSlider(SettingsKeys.MUSIC_VOLUME, skin);
+        SliderDisplayTextField musicVolumeTextField = new SliderDisplayTextField(SettingsKeys.MUSIC_VOLUME, skin, musicVolumeSlider);
 
-                musicVolumeSlider.setValue(sliderValue);
-            }
-        });
-        musicVolumeSlider.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                int textFieldValue = (int) (musicVolumeSlider.getValue()*100);
-                String text = Integer.toString(textFieldValue);
-
-                textField.setText(text);
-            }
-        });
-
-        menuTable.add(musicVolumeLabel).expandX().pad(10);
-        menuTable.add(musicVolumeSlider).pad(10);
-        menuTable.add(textField).size(100, 30).pad(10);
-
+        menuTable.add(musicVolumeLabel).left().expandX().pad(CELL_PADDING);
+        menuTable.add(musicVolumeSlider).pad(CELL_PADDING);
+        menuTable.add(musicVolumeTextField).size(DISPLAY_TEXTFIELD_WIDTH, DISPLAY_TEXTFIELD_HEIGHT).pad(CELL_PADDING);
         menuTable.row();
 
+        // Sound Volume Setting
+        Label soundVolumeLabel = new Label("Sound Volume: ", skin);
+        SettingsSlider soundVolumeSlider = new SettingsSlider(SettingsKeys.SOUND_VOLUME, skin);
+        SliderDisplayTextField soundVolumeTextField = new SliderDisplayTextField(SettingsKeys.SOUND_VOLUME, skin, soundVolumeSlider);
 
-        rootTable.add(menuTable);
+        menuTable.add(soundVolumeLabel).left().expandX().pad(CELL_PADDING);
+        menuTable.add(soundVolumeSlider).pad(CELL_PADDING);
+        menuTable.add(soundVolumeTextField).size(DISPLAY_TEXTFIELD_WIDTH, DISPLAY_TEXTFIELD_HEIGHT).pad(CELL_PADDING);
+        menuTable.row();
+
+        // Speech Volume Setting
+        Label speechVolumeLabel = new Label("Speech Volume: ", skin);
+        SettingsSlider speechVolumeSlider = new SettingsSlider(SettingsKeys.SPEECH_VOLUME, skin);
+        SliderDisplayTextField speechVolumeTextField = new SliderDisplayTextField(SettingsKeys.SPEECH_VOLUME, skin, speechVolumeSlider);
+
+        menuTable.add(speechVolumeLabel).left().expandX().pad(CELL_PADDING);
+        menuTable.add(speechVolumeSlider).pad(CELL_PADDING);
+        menuTable.add(speechVolumeTextField).size(DISPLAY_TEXTFIELD_WIDTH, DISPLAY_TEXTFIELD_HEIGHT).pad(CELL_PADDING);
+        menuTable.row();
+
+        // Graphics Menu
+        Label graphicsTitleLabel = new Label("Graphics Settings", skin);
+        graphicsTitleLabel.setFontScale(1.3f);
+
+        menuTable.add(graphicsTitleLabel).colspan(3).left().expandX();
+        menuTable.row().padTop(TOP_SECTION_LABEL_PADDING);
+
+        // resolution setting
+        Label resolutionLabel = new Label("Resolution: ", skin);
+        ResolutionSelectBox resolutionSelectBox = new ResolutionSelectBox(skin);
+
+        menuTable.add(resolutionLabel).left().expandX().pad(CELL_PADDING);
+        menuTable.add(resolutionSelectBox).pad(CELL_PADDING);
+        menuTable.row();
+
+        // full screen setting
+        Label fullScreenLabel = new Label("Full Screen: ", skin);
+        CheckBox fullScreenCheckBox = new CheckBox("", skin);
+        boolean isFullScreen = Config.getBool("Settings", "fullscreen");
+        fullScreenCheckBox.setChecked(isFullScreen);
+
+        menuTable.add(fullScreenLabel).left().expandX().pad(CELL_PADDING);
+        menuTable.add(fullScreenCheckBox).pad(CELL_PADDING);
+        menuTable.row();
+
+        rootTable.add(menuTable).grow().pad(WINDOW_PADDING);
         stage.addActor(rootTable);
 
         InputManager.getInstance().addFirst(stage);
@@ -193,12 +230,9 @@ public class OptionsScreen implements IScreen {
     public void draw(float delta) {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-//        batch.begin();
-//        batch.draw(bgImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        batch.end();
 
         stage.act(delta);
         stage.draw();
     }
+
 }
