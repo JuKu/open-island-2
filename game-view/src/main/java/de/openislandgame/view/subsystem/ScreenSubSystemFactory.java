@@ -25,7 +25,7 @@ public class ScreenSubSystemFactory {
         screenManager.addScreen(Screens.OPTIONS_SCREEN, new OptionsScreen());
 
         //set activated screen
-        screenManager.leaveAllAndEnter(Screens.OPTIONS_SCREEN);
+        screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
 
         return screenSubSystem;
     }

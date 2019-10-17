@@ -44,12 +44,15 @@ public class OptionsScreen implements IScreen {
     private AssetManager assetManager;
     private Texture bgImage;
     private Music music;
+    private Sound hoverSound;
+
 
     // file paths
     private static final String UI_ATLAS_PATH = "./data/test/ui/uiskin.atlas";
     private static final String UI_SKIN_PATH = "./data/test/ui/uiskin.json";
     private static final String BGIMAGE_PATH = "./data/test/bg/flat-field-bg2.jpg";
     private static final String MUSIC_PATH = "./data/test/music/SnowyForest.mp3";
+    private static final String SELECT_SOUND_PATH = "./data/test/sound/menu_selection_click/menu_selection_click_16bit.wav";
 
     // display text field props
     private static final int DISPLAY_TEXTFIELD_WIDTH = 100;
@@ -58,11 +61,25 @@ public class OptionsScreen implements IScreen {
     private static final int TABLE_PADDING = 50;
     private static final int TOP_SECTION_LABEL_PADDING = 10;
 
+    private static final int EXIT_BUTTON_WIDTH = 150;
+    private static final int EXIT_BUTTON_HEIGHT = 50;
+    private static final int EXIT_BUTTON_PAD = 10;
+
     // window pad
     private static final int WINDOW_PADDING = 50;
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
+
+    }
+
+    @Override
+    public void onStop(ScreenManager<IScreen> screenManager) {
+
+    }
+
+    @Override
+    public void onResume(ScreenManager<IScreen> screenManager) {
         assetManager = new AssetManager();
 
         // init batch, camera, viewport and background image
@@ -85,12 +102,14 @@ public class OptionsScreen implements IScreen {
         assetManager.load(BGIMAGE_PATH, Texture.class);
         assetManager.load(UI_ATLAS_PATH, TextureAtlas.class);
         assetManager.load(UI_SKIN_PATH, Skin.class, new SkinLoader.SkinParameter(UI_ATLAS_PATH));
+        assetManager.load(SELECT_SOUND_PATH, Sound.class);
 
         // wait
         assetManager.finishLoadingAsset(MUSIC_PATH);
         assetManager.finishLoadingAsset(BGIMAGE_PATH);
         assetManager.finishLoadingAsset(UI_ATLAS_PATH);
         assetManager.finishLoadingAsset(UI_SKIN_PATH);
+        assetManager.finishLoadingAsset(SELECT_SOUND_PATH);
 
         // get music
         music = assetManager.get(MUSIC_PATH, Music.class);
@@ -103,7 +122,8 @@ public class OptionsScreen implements IScreen {
         atlas = assetManager.get(UI_ATLAS_PATH);
         skin = assetManager.get(UI_SKIN_PATH);
 
-        stage.setDebugAll(true);
+        // get hover sound
+        hoverSound = assetManager.get(SELECT_SOUND_PATH);
 
         Table rootTable = new Table();
         rootTable.setBackground(new TextureRegionDrawable(bgImage));
@@ -171,30 +191,36 @@ public class OptionsScreen implements IScreen {
         CheckBox fullScreenCheckBox = new CheckBox("", skin);
         boolean isFullScreen = Config.getBool("Settings", "fullscreen");
         fullScreenCheckBox.setChecked(isFullScreen);
+        fullScreenCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                boolean isFullScreen = fullScreenCheckBox.isChecked();
+                Config.set("Settings", "fullscreen", String.valueOf(isFullScreen));
+            }
+        });
 
         menuTable.add(fullScreenLabel).left().expandX().pad(CELL_PADDING);
         menuTable.add(fullScreenCheckBox).pad(CELL_PADDING);
         menuTable.row();
 
+        // table for exit button
+        Table exitTable = new Table();
+        MenuButton exitButton = new MenuButton("Back to Menu", skin, hoverSound);
+        exitButton.setOnClickNewScreen(screenManager, Screens.MAIN_MENU_SCREEN);
+        exitTable.add(exitButton).width(EXIT_BUTTON_WIDTH).height(EXIT_BUTTON_HEIGHT).pad(EXIT_BUTTON_PAD);
+
+        menuTable.add(exitTable).expandY().left().bottom();
+
         rootTable.add(menuTable).grow().pad(WINDOW_PADDING);
+
         stage.addActor(rootTable);
 
         InputManager.getInstance().addFirst(stage);
     }
 
     @Override
-    public void onStop(ScreenManager<IScreen> screenManager) {
-
-    }
-
-    @Override
-    public void onResume(ScreenManager<IScreen> screenManager) {
-
-    }
-
-    @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
-// stop and dispose music and stage
+        // stop and dispose music and stage
         music.stop();
         music.dispose();
 

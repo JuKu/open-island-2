@@ -11,10 +11,12 @@ import com.jukusoft.engine2d.core.config.Config;
 
 public class SliderDisplayTextField extends TextField {
     private static final String SETTINGS_STRING = "Settings";
+    private String settingsKey;
 
 
     public SliderDisplayTextField(String settingsKey, Skin skin) {
         super("", skin);
+        this.settingsKey = settingsKey;
         float settingsValue = Config.getFloat(SETTINGS_STRING, settingsKey);
         String settingsString = Integer.toString((int) (settingsValue*100));
         setText(settingsString);
@@ -33,6 +35,8 @@ public class SliderDisplayTextField extends TextField {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 int sliderValue = (int) (slider.getValue()*100);
                 String text = Integer.toString(sliderValue);
+
+                Config.set(SETTINGS_STRING, settingsKey, String.valueOf(slider.getValue()));
 
                 setText(text);
             }
