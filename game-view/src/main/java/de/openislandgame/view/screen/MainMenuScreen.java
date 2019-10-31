@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
+import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
@@ -70,6 +71,8 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
+        Log.i("MainMenu", "onResume()");
+
         assetManager = new AssetManager();
 
         // init batch, camera, viewport and background image
@@ -178,6 +181,8 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
+        Log.i("MainMenu", "onPause()");
+
         // stop and dispose music and stage
         music.stop();
         music.dispose();
