@@ -19,7 +19,7 @@ git:
   depth: 9999999
 
 script:
-  - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true --update-snapshots -B -V
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=jukusoft -Dsonar.login=${SONAR_TOKEN}
 
 notifications:
