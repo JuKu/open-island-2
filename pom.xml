@@ -82,6 +82,8 @@
 
 		<game.engine.version>1.0.1-SNAPSHOT</game.engine.version>
 
+		<easy.i18n.version>1.2.0</easy.i18n.version>
+
 		<!-- don't skip this module, instead deploy this module to maven central -->
 		<maven.deploy.skip>false</maven.deploy.skip>
 		<maven.deploy.uniqueVersion>false</maven.deploy.uniqueVersion>

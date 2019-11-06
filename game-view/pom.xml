@@ -45,5 +45,42 @@
         </dependency>
     </dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.jukusoft</groupId>
+				<artifactId>gettext-maven-plugin</artifactId>
+				<version>${easy.i18n.version}</version>
+				<configuration>
+					<outputDir>data/i18n/</outputDir>
+					<defaultDomain>messages</defaultDomain>
+
+					<header>
+						<title>Open Island Game</title>
+						<copyright>Copyright (c) 2019 JuKuSoft.com</copyright>
+						<license>This file is distributed under the same license as the ${project.name} package.</license>
+						<author>JuKu, David, 2019.</author>
+						<version>${project.version}</version>
+					</header>
+
+					<srcDirs>
+						<!-- <dir>${project.basedir}/base-game/src</dir>
+						<dir>${project.basedir}/commons/src</dir>
+						<dir>${project.basedir}/game-logic/src</dir> -->
+						<dir>${project.basedir}/src</dir>
+					</srcDirs>
+				</configuration>
+				<!-- <executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>generatepot</goal>
+						</goals>
+					</execution>
+				</executions> -->
+			</plugin>
+		</plugins>
+	</build>
+
 
 </project>
