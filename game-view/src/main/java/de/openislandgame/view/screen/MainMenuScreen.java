@@ -65,8 +65,7 @@ public class MainMenuScreen implements IScreen {
 
     @Override
     public void onStop(ScreenManager<IScreen> screenManager) {
-        // on stop and on pause are the same
-        onPause(screenManager);
+        //
     }
 
     @Override
