@@ -84,10 +84,6 @@ public class MainMenuScreen implements IScreen {
         camera.update();
         stage = new Stage(viewport, batch);
 
-        // init button skin
-        //atlas = new TextureAtlas(BUTTON_ATLAS_PATH);
-        //skin = new Skin(Gdx.files.internal(BUTTON_SKIN_PATH), atlas);
-
         // load assets
         assetManager.load(MUSIC_PATH, Music.class);
         assetManager.load(BGIMAGE_PATH, Texture.class);
