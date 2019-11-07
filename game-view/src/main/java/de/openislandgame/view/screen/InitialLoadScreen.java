@@ -1,14 +1,15 @@
 package de.openislandgame.view.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.core.config.Config;
@@ -22,7 +23,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.zip.ZipFile;
 
-public class LoadScreen implements IScreen {
+public class InitialLoadScreen implements IScreen {
+    private float elapsedTime;
     private Camera camera;
     private Viewport viewport;
 
@@ -36,7 +38,6 @@ public class LoadScreen implements IScreen {
     // time
     private final float loadAnimationWidthAndHeight = 150;
     private final float animationPad = 20;
-    private float elapsedTime = 0;
 
     // logo
     private final float logoWidth = 150;
@@ -50,7 +51,7 @@ public class LoadScreen implements IScreen {
     private Texture logo;
 
     private static final String ANIMATION_PACK_PATH = "./data/test/loadscreen/AnimationLoadingScreen.pack";
-    private static final String BGIMAGE_PATH = "./data/test/bg/field-bg2-blurred.jpg";
+    private static final String BGIMAGE_PATH = "./data/test/bg/waterfall_background.jpg";
     private static final String LOGO_PATH = "./data/test/logo/logo.png";
 
     @Override
@@ -129,8 +130,9 @@ public class LoadScreen implements IScreen {
 
     @Override
     public void update(ScreenManager<IScreen> screenManager, float delta) {
-        //
-
+        if (elapsedTime > 5){
+            screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
+        }
     }
 
     @Override
@@ -145,10 +147,11 @@ public class LoadScreen implements IScreen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        // batch.draw(bgImage, 0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
-        batch.draw(logo,
-                viewportWidth/2f - logoWidth/2f, viewportHeight/2f - logoHeight/2f,
-                logoWidth, logoHeight);
+        batch.draw(bgImage, 0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
+//        batch.draw(logo,
+//                viewportWidth/2f - logoWidth/2f, viewportHeight/2f - logoHeight/2f,
+//                logoWidth, logoHeight);
+//
 
         elapsedTime += delta;
         TextureRegion frame = loadingAnimation.getKeyFrame(elapsedTime, true);
@@ -159,5 +162,4 @@ public class LoadScreen implements IScreen {
 
         batch.end();
     }
-
 }
