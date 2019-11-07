@@ -59,12 +59,12 @@ public class LoadScreen implements IScreen {
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
-
+        //
     }
 
     @Override
     public void onStop(ScreenManager<IScreen> screenManager) {
-
+        //
     }
 
     @Override

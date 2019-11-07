@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.basegame.Game;
 import com.jukusoft.engine2d.basegame.loading.LoadingProcessor;
 import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.engine2d.core.logger.Log;
@@ -29,6 +30,7 @@ import java.util.zip.ZipFile;
 public class InitialLoadScreen implements IScreen {
 
     private static final String ZIP_PATH = "data/maindata/base.zip";
+    private static final String LOG_TAG = "InitialLoadScreen";
 
     private static final String ANIMATION_PACK_PATH = "loadscreen/AnimationLoadingScreen.pack";
     private static final String BGIMAGE_PATH = "bg/waterfall_background.jpg";
@@ -60,7 +62,7 @@ public class InitialLoadScreen implements IScreen {
     private Texture bgImage;
     private Texture logo;
 
-    private LoadingProcessor loadingProcessor = new LoadingProcessor();
+    private LoadingProcessor loadingProcessor;
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
@@ -128,7 +130,16 @@ public class InitialLoadScreen implements IScreen {
 
     @Override
     public void update(ScreenManager<IScreen> screenManager, float delta) {
-        if (elapsedTime > 5){
+        if (!loadingProcessor.hasFinished()) {
+            try {
+                loadingProcessor.process();
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "Exception while loading process: ", e);
+                ErrorHandler.shutdownWithException(e);
+            }
+        }
+
+        if (elapsedTime > 5 && loadingProcessor.hasFinished()){
             screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
         }
     }
