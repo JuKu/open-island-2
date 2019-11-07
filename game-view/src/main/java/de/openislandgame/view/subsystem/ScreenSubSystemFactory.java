@@ -23,9 +23,10 @@ public class ScreenSubSystemFactory {
         screenManager.addScreen(Screens.MAIN_MENU_SCREEN, new MainMenuScreen());
         screenManager.addScreen(Screens.CREDITS_SCREEN, new CreditsScreen());
         screenManager.addScreen(Screens.OPTIONS_SCREEN, new OptionsScreen());
+        screenManager.addScreen(Screens.INITIAL_LOADING_SCREEN, new InitialLoadScreen());
 
         //set activated screen
-        screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
+        screenManager.leaveAllAndEnter(Screens.INITIAL_LOADING_SCREEN);
 
         return screenSubSystem;
     }
