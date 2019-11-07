@@ -12,18 +12,30 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.basegame.Game;
+import com.jukusoft.engine2d.basegame.loading.LoadingProcessor;
 import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.core.shutdown.ErrorHandler;
 import com.jukusoft.engine2d.view.assets.ZipAssetManagerFactory;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
+import de.openislandgame.view.loading.LoadingProcessorFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 public class InitialLoadScreen implements IScreen {
+
+    private static final String ZIP_PATH = "data/maindata/base.zip";
+    private static final String LOG_TAG = "InitialLoadScreen";
+
+    private static final String ANIMATION_PACK_PATH = "loadscreen/AnimationLoadingScreen.pack";
+    private static final String BGIMAGE_PATH = "bg/waterfall_background.jpg";
+    private static final String LOGO_PATH = "logo/logo.png";
+
     private float elapsedTime;
     private Camera camera;
     private Viewport viewport;
@@ -50,65 +62,53 @@ public class InitialLoadScreen implements IScreen {
     private Texture bgImage;
     private Texture logo;
 
-    private static final String ANIMATION_PACK_PATH = "./data/test/loadscreen/AnimationLoadingScreen.pack";
-    private static final String BGIMAGE_PATH = "./data/test/bg/waterfall_background.jpg";
-    private static final String LOGO_PATH = "./data/test/logo/logo.png";
+    private LoadingProcessor loadingProcessor;
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
-
+        loadingProcessor = LoadingProcessorFactory.create();
     }
 
     @Override
     public void onStop(ScreenManager<IScreen> screenManager) {
-
+        loadingProcessor = null;
     }
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
-        // initAssetManager();
-
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         viewport.apply(true);
 
         batch = new SpriteBatch();
 
-        // workaround
-        assetManager = new AssetManager();
+        try (ZipFile zipFile = new ZipFile(new File(ZIP_PATH))) {
+            //create asset manager for loading assets from only one zip file
+            assetManager = ZipAssetManagerFactory.create(zipFile);
 
-        assetManager.load(ANIMATION_PACK_PATH, TextureAtlas.class);
-        assetManager.finishLoadingAsset(ANIMATION_PACK_PATH);
-        atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
+            assetManager.load(ANIMATION_PACK_PATH, TextureAtlas.class);
+            assetManager.finishLoadingAsset(ANIMATION_PACK_PATH);
+            atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
 
-        // get and set bg image
-        assetManager.load(BGIMAGE_PATH, Texture.class);
-        assetManager.finishLoadingAsset(BGIMAGE_PATH);
-        bgImage = assetManager.get(BGIMAGE_PATH);
+            // get and set bg image
+            assetManager.load(BGIMAGE_PATH, Texture.class);
+            assetManager.finishLoadingAsset(BGIMAGE_PATH);
+            bgImage = assetManager.get(BGIMAGE_PATH);
 
-        assetManager.load(LOGO_PATH, Texture.class);
-        assetManager.finishLoadingAsset(LOGO_PATH);
-        logo = assetManager.get(LOGO_PATH);
+            assetManager.load(LOGO_PATH, Texture.class);
+            assetManager.finishLoadingAsset(LOGO_PATH);
+            logo = assetManager.get(LOGO_PATH);
+        } catch (ZipException e) {
+            Log.e(LoadScreen.class.getSimpleName(), "Cannot open zip file: " + new File(ZIP_PATH).getAbsolutePath(), e);
+            ErrorHandler.shutdownWithException(e);
+        } catch (IOException e) {
+            Log.e(LoadScreen.class.getSimpleName(), "IOException while opening zip file: " + new File(ZIP_PATH).getAbsolutePath(), e);
+            ErrorHandler.shutdownWithException(e);
+        }
 
         loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
 
         //TODO: add code here
-    }
-
-    private void initAssetManager() {
-        File baseGamePackPath = new File(Config.get("Gamepack", "base"));
-        ZipFile zipFile;
-
-        try {
-            zipFile = new ZipFile(baseGamePackPath);
-        } catch (IOException e) {
-            Log.e(LoadScreen.class.getSimpleName(), "IOException while open gamepack: " + baseGamePackPath.getAbsolutePath(), e);
-            ErrorHandler.shutdownWithException(e);
-
-            return;
-        }
-
-        assetManager = ZipAssetManagerFactory.create(zipFile);
     }
 
     @Override
@@ -130,7 +130,16 @@ public class InitialLoadScreen implements IScreen {
 
     @Override
     public void update(ScreenManager<IScreen> screenManager, float delta) {
-        if (elapsedTime > 5){
+        if (!loadingProcessor.hasFinished()) {
+            try {
+                loadingProcessor.process();
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "Exception while loading process: ", e);
+                ErrorHandler.shutdownWithException(e);
+            }
+        }
+
+        if (elapsedTime > 5 && loadingProcessor.hasFinished()){
             screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
         }
     }
