@@ -12,12 +12,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.basegame.loading.LoadingProcessor;
 import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.core.shutdown.ErrorHandler;
 import com.jukusoft.engine2d.view.assets.ZipAssetManagerFactory;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
+import de.openislandgame.view.loading.LoadingProcessorFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,20 +60,20 @@ public class InitialLoadScreen implements IScreen {
     private Texture bgImage;
     private Texture logo;
 
+    private LoadingProcessor loadingProcessor = new LoadingProcessor();
+
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
-
+        loadingProcessor = LoadingProcessorFactory.create();
     }
 
     @Override
     public void onStop(ScreenManager<IScreen> screenManager) {
-
+        loadingProcessor = null;
     }
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
-        // initAssetManager();
-
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         viewport.apply(true);
@@ -105,22 +107,6 @@ public class InitialLoadScreen implements IScreen {
         loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
 
         //TODO: add code here
-    }
-
-    private void initAssetManager() {
-        File baseGamePackPath = new File(Config.get("Gamepack", "base"));
-        ZipFile zipFile;
-
-        try {
-            zipFile = new ZipFile(baseGamePackPath);
-        } catch (IOException e) {
-            Log.e(LoadScreen.class.getSimpleName(), "IOException while open gamepack: " + baseGamePackPath.getAbsolutePath(), e);
-            ErrorHandler.shutdownWithException(e);
-
-            return;
-        }
-
-        assetManager = ZipAssetManagerFactory.create(zipFile);
     }
 
     @Override
