@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
 import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.input.InputManager;
+import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.buttons.MenuButton;
@@ -52,11 +53,11 @@ public class MainMenuScreen implements IScreen {
     private Sound hoverSound;
 
     // click sound path
-    private static final String BUTTON_ATLAS_PATH = "./data/test/ui/uiskin.atlas";
-    private static final String BUTTON_SKIN_PATH = "./data/test/ui/uiskin.json";
-    private static final String SELECT_SOUND_PATH = "./data/test/sound/menu_selection_click/menu_selection_click_16bit.wav";
-    private static final String BGIMAGE_PATH = "./data/test/bg/flat-field-bg2.jpg";
-    private static final String MUSIC_PATH = "./data/test/music/SnowyForest.mp3";
+    private static final String BUTTON_ATLAS_PATH = "ui/uiskin.atlas";
+    private static final String BUTTON_SKIN_PATH = "ui/uiskin.json";
+    private static final String SELECT_SOUND_PATH = "sound/menu_selection_click/menu_selection_click_16bit.wav";
+    private static final String BGIMAGE_PATH = "bg/flat-field-bg2.jpg";
+    private static final String MUSIC_PATH = "music/SnowyForest.mp3";
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
@@ -72,7 +73,7 @@ public class MainMenuScreen implements IScreen {
     public void onResume(ScreenManager<IScreen> screenManager) {
         Log.i("MainMenu", "onResume()");
 
-        assetManager = new AssetManager();
+        GameAssetManager assetManager = GameAssetManager.getInstance();
 
         // init batch, camera, viewport and background image
         batch = new SpriteBatch();
@@ -84,9 +85,8 @@ public class MainMenuScreen implements IScreen {
         stage = new Stage(viewport, batch);
 
         // init button skin
-        atlas = new TextureAtlas(BUTTON_ATLAS_PATH);
-        skin = new Skin(Gdx.files.internal(BUTTON_SKIN_PATH), atlas);
-
+        //atlas = new TextureAtlas(BUTTON_ATLAS_PATH);
+        //skin = new Skin(Gdx.files.internal(BUTTON_SKIN_PATH), atlas);
 
         // load assets
         assetManager.load(MUSIC_PATH, Music.class);
@@ -96,11 +96,11 @@ public class MainMenuScreen implements IScreen {
         assetManager.load(BUTTON_SKIN_PATH, Skin.class, new SkinLoader.SkinParameter(BUTTON_ATLAS_PATH));
 
         // wait
-        assetManager.finishLoadingAsset(MUSIC_PATH);
-        assetManager.finishLoadingAsset(BGIMAGE_PATH);
-        assetManager.finishLoadingAsset(SELECT_SOUND_PATH);
-        assetManager.finishLoadingAsset(BUTTON_ATLAS_PATH);
-        assetManager.finishLoadingAsset(BUTTON_SKIN_PATH);
+        assetManager.finishLoading(MUSIC_PATH);
+        assetManager.finishLoading(BGIMAGE_PATH);
+        assetManager.finishLoading(SELECT_SOUND_PATH);
+        assetManager.finishLoading(BUTTON_ATLAS_PATH);
+        assetManager.finishLoading(BUTTON_SKIN_PATH);
 
         // get music
         music = assetManager.get(MUSIC_PATH, Music.class);
@@ -203,8 +203,12 @@ public class MainMenuScreen implements IScreen {
         // dispose batch
         batch.dispose();
 
-        // dispose asset manager
-        assetManager.dispose();
+        //TODO: unlad assets
+        assetManager.unload(MUSIC_PATH);
+        assetManager.unload(BGIMAGE_PATH);
+        assetManager.unload(SELECT_SOUND_PATH);
+        assetManager.unload(BUTTON_ATLAS_PATH);
+        assetManager.unload(BUTTON_SKIN_PATH);
     }
 
     @Override

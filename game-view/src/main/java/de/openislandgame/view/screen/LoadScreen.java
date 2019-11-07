@@ -15,6 +15,7 @@ import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.core.shutdown.ErrorHandler;
 import com.jukusoft.engine2d.view.assets.ZipAssetManagerFactory;
+import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 
@@ -50,9 +51,6 @@ public class LoadScreen implements IScreen {
     private final float logoWidth = 150;
     private final float logoHeight = 150;
 
-    //local asset manager - only for use in this screen
-    private AssetManager assetManager;
-
     // textures
     private Texture bgImage;
     private Texture logo;
@@ -77,49 +75,22 @@ public class LoadScreen implements IScreen {
 
         batch = new SpriteBatch();
 
-        try (ZipFile zipFile = new ZipFile(new File(ZIP_PATH))) {
-            // workaround
-            assetManager = ZipAssetManagerFactory.create(zipFile);
+        GameAssetManager assetManager = GameAssetManager.getInstance();
 
-            // get and set bg image
-            assetManager.load(BGIMAGE_PATH, Texture.class);
-            assetManager.finishLoadingAsset(BGIMAGE_PATH);
-            bgImage = assetManager.get(BGIMAGE_PATH);
+        // get and set bg image
+        assetManager.load(BGIMAGE_PATH, Texture.class);
+        assetManager.finishLoading(BGIMAGE_PATH);
+        bgImage = assetManager.get(BGIMAGE_PATH, Texture.class);
 
-            assetManager.load(ANIMATION_PACK_PATH, TextureAtlas.class);
-            assetManager.finishLoadingAsset(ANIMATION_PACK_PATH);
-            atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
+        assetManager.load(ANIMATION_PACK_PATH, TextureAtlas.class);
+        assetManager.finishLoading(ANIMATION_PACK_PATH);
+        atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
 
-            assetManager.load(LOGO_PATH, Texture.class);
-            assetManager.finishLoadingAsset(LOGO_PATH);
-            logo = assetManager.get(LOGO_PATH);
+        assetManager.load(LOGO_PATH, Texture.class);
+        assetManager.finishLoading(LOGO_PATH);
+        logo = assetManager.get(LOGO_PATH, Texture.class);
 
-            loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
-
-            //TODO: add code here
-        } catch (ZipException e) {
-            Log.e(LoadScreen.class.getSimpleName(), "Cannot open zip file: " + new File(ZIP_PATH).getAbsolutePath(), e);
-            ErrorHandler.shutdownWithException(e);
-        } catch (IOException e) {
-            Log.e(LoadScreen.class.getSimpleName(), "IOException while opening zip file: " + new File(ZIP_PATH).getAbsolutePath(), e);
-            ErrorHandler.shutdownWithException(e);
-        }
-    }
-
-    private void initAssetManager() {
-        File baseGamePackPath = new File(Config.get("Gamepack", "base"));
-        ZipFile zipFile;
-
-        try {
-            zipFile = new ZipFile(baseGamePackPath);
-        } catch (IOException e) {
-            Log.e(LoadScreen.class.getSimpleName(), "IOException while open gamepack: " + baseGamePackPath.getAbsolutePath(), e);
-            ErrorHandler.shutdownWithException(e);
-
-            return;
-        }
-
-        assetManager = ZipAssetManagerFactory.create(zipFile);
+        loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
     }
 
     @Override
@@ -129,9 +100,6 @@ public class LoadScreen implements IScreen {
 
         bgImage.dispose();
         logo.dispose();
-
-        assetManager.dispose();
-        assetManager = null;
     }
 
     @Override
