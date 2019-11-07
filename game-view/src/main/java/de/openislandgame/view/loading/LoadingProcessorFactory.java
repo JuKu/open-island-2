@@ -11,6 +11,7 @@ public class LoadingProcessorFactory {
     public static LoadingProcessor create() {
         LoadingProcessor loadingProcessor = new LoadingProcessor();
         loadingProcessor.addTask(new ModLoaderTask());
+        loadingProcessor.addTask(new InitAssetManagerTask());
 
         return loadingProcessor;
     }

@@ -12,7 +12,7 @@ import com.jukusoft.engine2d.core.utils.Utils;
 import java.io.File;
 
 //load mods first
-@TaskPriority(1)
+@TaskPriority(100)
 public class ModLoaderTask implements LoadingTask {
 
     private static final String LOG_TAG = "ModLoader";
