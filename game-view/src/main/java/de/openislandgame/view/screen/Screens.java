@@ -9,4 +9,5 @@ public class Screens {
     public static final String MAIN_MENU_SCREEN = "main_menu_screen";
     public static final String CREDITS_SCREEN = "credits_screen";
     public static final String INITIAL_LOADING_SCREEN = "initial_loading_screen";
+    public static final String OPTIONS_SCREEN = "options_screen";
 }

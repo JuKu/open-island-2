@@ -8,30 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
-import de.openislandgame.view.screen.Screens;
-
-import java.util.function.Consumer;
 
 public class MenuButton extends TextButton {
 
     public MenuButton(String text, Skin skin, Sound hoverSound){
         super(text, skin);
-        getStyle().over = skin.getDrawable("default-rect");
-        getStyle().down = skin.getDrawable("default-rect");
-        getStyle().up = skin.getDrawable("default-round");
         setHoverSound(hoverSound);
-    }
-
-    public MenuButton(String text, Skin skin) {
-        super(text, skin);
-    }
-
-    public MenuButton(String text, Skin skin, String styleName) {
-        super(text, skin, styleName);
-    }
-
-    public MenuButton(String text, TextButtonStyle style) {
-        super(text, style);
     }
 
     public void setHoverSound(Sound hoverSound){

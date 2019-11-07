@@ -141,6 +141,7 @@ public class MainMenuScreen implements IScreen {
         // settings button setup
         MenuButton settingsButton = new MenuButton("Settings", skin, hoverSound);
         menuTable.add(settingsButton).size(buttonWidth, buttonHeight).pad(buttonPad);
+        settingsButton.setOnClickNewScreen(screenManager, Screens.OPTIONS_SCREEN);
         menuTable.row();
 
         // credits button setup
