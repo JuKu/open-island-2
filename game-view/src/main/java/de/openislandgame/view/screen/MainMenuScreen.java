@@ -38,7 +38,7 @@ public class MainMenuScreen implements IScreen {
     private final int buttonPad = 10;
 
     // asset manager for use in this screen
-    private AssetManager assetManager;
+    private GameAssetManager assetManager;
 
     // menu padding
     private final int menuPad = 50;
@@ -73,7 +73,7 @@ public class MainMenuScreen implements IScreen {
     public void onResume(ScreenManager<IScreen> screenManager) {
         Log.i("MainMenu", "onResume()");
 
-        GameAssetManager assetManager = GameAssetManager.getInstance();
+        this.assetManager = GameAssetManager.getInstance();
 
         // init batch, camera, viewport and background image
         batch = new SpriteBatch();
