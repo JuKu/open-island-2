@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.core.utils.FileUtils;
+import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 
@@ -41,10 +43,10 @@ public class CreditsScreen implements IScreen {
     private String[] creditLines;
 
     // asset paths
-    private static final String CREDITS_FONT_PATH = "./data/test/fonts/almfixed.fnt";
+    private static final String CREDITS_FONT_PATH = "fonts/almfixed.fnt";
 
     // asset manager
-    private AssetManager assetManager;
+    private GameAssetManager assetManager;
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
@@ -63,6 +65,7 @@ public class CreditsScreen implements IScreen {
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
+        Log.i("CreditsScreen", "onResume()");
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         batch = new SpriteBatch();
@@ -71,10 +74,10 @@ public class CreditsScreen implements IScreen {
 
         startY = 0;
 
-        assetManager = new AssetManager();
+        assetManager = GameAssetManager.getInstance();
 
         assetManager.load(CREDITS_FONT_PATH, BitmapFont.class);
-        assetManager.finishLoadingAsset(CREDITS_FONT_PATH);
+        assetManager.finishLoading(CREDITS_FONT_PATH);
 
         textFont = assetManager.get(CREDITS_FONT_PATH);
         textFont.setColor(textColor);
@@ -89,6 +92,8 @@ public class CreditsScreen implements IScreen {
 
     @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
+        Log.i("CreditsScreen", "onPause()");
+
         // dispose batch
         batch.dispose();
         // dispose fonts
@@ -97,7 +102,7 @@ public class CreditsScreen implements IScreen {
         titleFont.dispose();
 
         // dispose asset manager
-        assetManager.dispose();
+        assetManager.unload(CREDITS_FONT_PATH);
     }
 
     @Override

@@ -22,7 +22,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
 import com.jukusoft.engine2d.core.config.Config;
+import com.jukusoft.engine2d.core.logger.Log;
 import com.jukusoft.engine2d.input.InputManager;
+import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.buttons.MenuButton;
@@ -41,18 +43,18 @@ public class OptionsScreen implements IScreen {
     private Skin skin;
 
     // asset manager
-    private AssetManager assetManager;
+    private GameAssetManager assetManager;
     private Texture bgImage;
     private Music music;
     private Sound hoverSound;
 
 
     // file paths
-    private static final String UI_ATLAS_PATH = "./data/test/ui/uiskin.atlas";
-    private static final String UI_SKIN_PATH = "./data/test/ui/uiskin.json";
-    private static final String BGIMAGE_PATH = "./data/test/bg/flat-field-bg2.jpg";
-    private static final String MUSIC_PATH = "./data/test/music/SnowyForest.mp3";
-    private static final String SELECT_SOUND_PATH = "./data/test/sound/menu_selection_click/menu_selection_click_16bit.wav";
+    private static final String UI_ATLAS_PATH = "ui/uiskin.atlas";
+    private static final String UI_SKIN_PATH = "ui/uiskin.json";
+    private static final String BGIMAGE_PATH = "bg/flat-field-bg2.jpg";
+    private static final String MUSIC_PATH = "music/SnowyForest.mp3";
+    private static final String SELECT_SOUND_PATH = "sound/menu_selection_click/menu_selection_click_16bit.wav";
 
     // display text field props
     private static final int DISPLAY_TEXTFIELD_WIDTH = 100;
@@ -80,21 +82,18 @@ public class OptionsScreen implements IScreen {
 
     @Override
     public void onResume(ScreenManager<IScreen> screenManager) {
-        assetManager = new AssetManager();
+        Log.i("OptionsScreen", "onResume()");
+
+        this.assetManager = GameAssetManager.getInstance();
 
         // init batch, camera, viewport and background image
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
-        bgImage = new Texture(BGIMAGE_PATH);
         viewport.apply();
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
         camera.update();
         stage = new Stage(viewport, batch);
-
-        // init button skin
-        atlas = new TextureAtlas(UI_ATLAS_PATH);
-        skin = new Skin(Gdx.files.internal(UI_SKIN_PATH), atlas);
 
 
         // load assets
@@ -105,11 +104,11 @@ public class OptionsScreen implements IScreen {
         assetManager.load(SELECT_SOUND_PATH, Sound.class);
 
         // wait
-        assetManager.finishLoadingAsset(MUSIC_PATH);
-        assetManager.finishLoadingAsset(BGIMAGE_PATH);
-        assetManager.finishLoadingAsset(UI_ATLAS_PATH);
-        assetManager.finishLoadingAsset(UI_SKIN_PATH);
-        assetManager.finishLoadingAsset(SELECT_SOUND_PATH);
+        assetManager.finishLoading(MUSIC_PATH);
+        assetManager.finishLoading(BGIMAGE_PATH);
+        assetManager.finishLoading(UI_ATLAS_PATH);
+        assetManager.finishLoading(UI_SKIN_PATH);
+        assetManager.finishLoading(SELECT_SOUND_PATH);
 
         // get music
         music = assetManager.get(MUSIC_PATH, Music.class);
@@ -220,16 +219,9 @@ public class OptionsScreen implements IScreen {
 
     @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
+        Log.i("OptionsScreen", "onPause()");
         // stop and dispose music and stage
         music.stop();
-        music.dispose();
-
-        // dispose background
-        bgImage.dispose();
-
-        // dispose button skins
-        skin.dispose();
-        atlas.dispose();
 
         // remove stage from input manager and dispose
         InputManager.getInstance().remove(stage);
@@ -238,8 +230,11 @@ public class OptionsScreen implements IScreen {
         // dispose batch
         batch.dispose();
 
-        // dispose asset manager
-        assetManager.dispose();
+        assetManager.unload(MUSIC_PATH);
+        assetManager.unload(BGIMAGE_PATH);
+        assetManager.unload(UI_ATLAS_PATH);
+        assetManager.unload(UI_SKIN_PATH);
+        assetManager.unload(SELECT_SOUND_PATH);
     }
 
     @Override

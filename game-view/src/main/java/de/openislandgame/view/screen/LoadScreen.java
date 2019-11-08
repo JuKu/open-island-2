@@ -26,8 +26,6 @@ import java.util.zip.ZipFile;
 
 public class LoadScreen implements IScreen {
 
-    private static final String ZIP_PATH = "data/maindata/base.zip";
-
     private static final String ANIMATION_PACK_PATH = "loadscreen/AnimationLoadingScreen.pack";
     private static final String BGIMAGE_PATH = "bg/field-bg2-blurred.jpg";
     private static final String LOGO_PATH = "logo/logo.png";
@@ -38,6 +36,8 @@ public class LoadScreen implements IScreen {
     // animation
     private TextureAtlas atlas;
     private Animation<TextureRegion> loadingAnimation;
+
+    private GameAssetManager assetManager;
 
     // batch
     private SpriteBatch batch;
@@ -75,19 +75,19 @@ public class LoadScreen implements IScreen {
 
         batch = new SpriteBatch();
 
-        GameAssetManager assetManager = GameAssetManager.getInstance();
+        assetManager = GameAssetManager.getInstance();
 
         // get and set bg image
         assetManager.load(BGIMAGE_PATH, Texture.class);
-        assetManager.finishLoading(BGIMAGE_PATH);
-        bgImage = assetManager.get(BGIMAGE_PATH, Texture.class);
-
         assetManager.load(ANIMATION_PACK_PATH, TextureAtlas.class);
-        assetManager.finishLoading(ANIMATION_PACK_PATH);
-        atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
-
         assetManager.load(LOGO_PATH, Texture.class);
+
+        assetManager.finishLoading(BGIMAGE_PATH);
+        assetManager.finishLoading(ANIMATION_PACK_PATH);
         assetManager.finishLoading(LOGO_PATH);
+
+        bgImage = assetManager.get(BGIMAGE_PATH, Texture.class);
+        atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
         logo = assetManager.get(LOGO_PATH, Texture.class);
 
         loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
@@ -96,10 +96,6 @@ public class LoadScreen implements IScreen {
     @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
         batch.dispose();
-        atlas.dispose();
-
-        bgImage.dispose();
-        logo.dispose();
     }
 
     @Override

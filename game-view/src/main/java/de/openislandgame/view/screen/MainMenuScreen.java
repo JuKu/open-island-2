@@ -1,7 +1,6 @@
 package de.openislandgame.view.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -181,17 +180,6 @@ public class MainMenuScreen implements IScreen {
 
         // stop and dispose music and stage
         music.stop();
-        music.dispose();
-
-        // dispose hover sound
-        hoverSound.dispose();
-
-        // dispose background
-        bgImage.dispose();
-
-        // dispose button skins
-        skin.dispose();
-        atlas.dispose();
 
         // remove stage from input manager and dispose
         InputManager.getInstance().remove(stage);
