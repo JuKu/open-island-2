@@ -2,17 +2,13 @@ package de.openislandgame.base;
 
 import com.jukusoft.engine2d.applayer.BaseGame;
 import com.jukusoft.engine2d.applayer.BaseGameFactory;
-import com.jukusoft.engine2d.applayer.game.BasicGame;
 import com.jukusoft.engine2d.basegame.Game;
 import com.jukusoft.engine2d.core.logger.Log;
-import com.jukusoft.engine2d.core.shutdown.ErrorHandler;
 import com.jukusoft.engine2d.core.subsystem.EventProcessor;
-import com.jukusoft.engine2d.core.subsystem.SubSystem;
 import com.jukusoft.engine2d.core.subsystem.SubSystemManager;
 import com.jukusoft.engine2d.core.utils.Threads;
 import com.jukusoft.engine2d.input.subsystem.InputSubSystem;
 import com.jukusoft.engine2d.plugin.PluginApi;
-import com.jukusoft.engine2d.view.subsystem.ScreenSubSystem;
 import de.openislandgame.view.subsystem.ScreenSubSystemFactory;
 
 import java.util.Objects;
