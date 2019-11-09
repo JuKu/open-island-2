@@ -24,6 +24,7 @@ import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.buttons.MenuButton;
+import de.openislandgame.view.selectboxes.LanguageSelectBox;
 import de.openislandgame.view.selectboxes.ResolutionSelectBox;
 import de.openislandgame.view.settings.SettingsKeys;
 import de.openislandgame.view.slider.SettingsSlider;
@@ -195,6 +196,19 @@ public class OptionsScreen implements IScreen {
 
         menuTable.add(fullScreenLabel).left().expandX().pad(CELL_PADDING);
         menuTable.add(fullScreenCheckBox).pad(CELL_PADDING);
+        menuTable.row();
+
+        // Language Menu
+        Label languageTitleLabel = new Label("Language Settings", skin);
+        languageTitleLabel.setFontScale(1.3f);
+        menuTable.add(languageTitleLabel).colspan(3).left().expandX();
+        menuTable.row().padTop(TOP_SECTION_LABEL_PADDING);
+
+        // language option
+        Label languageLabel = new Label("Language", skin);
+        LanguageSelectBox languageSelectBox = new LanguageSelectBox(skin);
+        menuTable.add(languageLabel).left().expandX().pad(CELL_PADDING);
+        menuTable.add(languageSelectBox).pad(CELL_PADDING);
         menuTable.row();
 
         // table for exit button
