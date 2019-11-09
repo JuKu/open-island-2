@@ -3,7 +3,6 @@ package de.openislandgame.base;
 import com.jukusoft.engine2d.applayer.BaseGame;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class GameFactoryTest {

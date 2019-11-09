@@ -1,6 +1,5 @@
 package de.openislandgame.view.loading;
 
-import com.jukusoft.engine2d.basegame.Game;
 import com.jukusoft.engine2d.basegame.loading.LoadingTask;
 import com.jukusoft.engine2d.basegame.mods.ModManager;
 import com.jukusoft.engine2d.core.config.Config;
