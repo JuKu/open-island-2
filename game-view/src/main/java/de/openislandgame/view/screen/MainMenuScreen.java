@@ -46,7 +46,7 @@ public class MainMenuScreen implements IScreen {
     private final int menuPad = 50;
 
     // background texture
-    private Array<Texture> bgImages = new Array<>();
+    private Array<Texture> bgImages;
 
     // music
     private Music music;
@@ -56,7 +56,7 @@ public class MainMenuScreen implements IScreen {
 
     // parallax backgorund
     private ParallaxBackground parallaxBackground;
-    private final float speed = 0.2f;
+    private final float speed = 20f;
 
     // click sound path
     private static final String BUTTON_ATLAS_PATH = "ui/uiskin.atlas";
@@ -222,6 +222,7 @@ public class MainMenuScreen implements IScreen {
     }
 
     private void loadBgImagesAndParallaxBackground(){
+        bgImages = new Array<>();
         for (int i=0; i < 6; i++){
             assetManager.load(getBgLayerName(i), Texture.class);
             assetManager.finishLoading(getBgLayerName(i));
