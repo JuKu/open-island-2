@@ -204,6 +204,7 @@ public class MainMenuScreen implements IScreen {
     @Override
     public void onResize(int oldWidth, int oldHeight, int newWidth, int newHeight) {
         stage.getViewport().update(newWidth, newHeight, true);
+        parallaxBackground.resize(newWidth, newHeight);
     }
 
     @Override
@@ -215,8 +216,6 @@ public class MainMenuScreen implements IScreen {
     public void draw(float delta) {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-
-        Log.i("delta", Float.toString(delta));
 
         stage.act(delta);
         stage.draw();

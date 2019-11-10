@@ -35,6 +35,10 @@ public class ParallaxBackground extends Actor {
         this.speed = speed;
     }
 
+    public void resize(float newWidth, float newHeight){
+        width = newWidth;
+        height = newHeight;
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha){
