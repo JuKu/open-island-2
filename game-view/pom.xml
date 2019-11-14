@@ -59,7 +59,7 @@
 				<artifactId>gettext-maven-plugin</artifactId>
 				<version>${easy.i18n.version}</version>
 				<configuration>
-					<outputDir>data/i18n/</outputDir>
+					<outputDir>../data/i18n/</outputDir>
 					<defaultDomain>messages</defaultDomain>
 
 					<header>
