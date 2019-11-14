@@ -1,32 +1,21 @@
 package de.openislandgame.view.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.jukusoft.engine2d.core.config.Config;
-import com.jukusoft.engine2d.core.logger.Log;
-import com.jukusoft.engine2d.core.shutdown.ErrorHandler;
-import com.jukusoft.engine2d.view.assets.ZipAssetManagerFactory;
 import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-
 public class LoadScreen implements IScreen {
-
-    private static final String ZIP_PATH = "data/maindata/base.zip";
 
     private static final String ANIMATION_PACK_PATH = "loadscreen/AnimationLoadingScreen.pack";
     private static final String BGIMAGE_PATH = "bg/field-bg2-blurred.jpg";
@@ -38,6 +27,8 @@ public class LoadScreen implements IScreen {
     // animation
     private TextureAtlas atlas;
     private Animation<TextureRegion> loadingAnimation;
+
+    private GameAssetManager assetManager;
 
     // batch
     private SpriteBatch batch;
@@ -75,19 +66,19 @@ public class LoadScreen implements IScreen {
 
         batch = new SpriteBatch();
 
-        GameAssetManager assetManager = GameAssetManager.getInstance();
+        assetManager = GameAssetManager.getInstance();
 
         // get and set bg image
         assetManager.load(BGIMAGE_PATH, Texture.class);
-        assetManager.finishLoading(BGIMAGE_PATH);
-        bgImage = assetManager.get(BGIMAGE_PATH, Texture.class);
-
         assetManager.load(ANIMATION_PACK_PATH, TextureAtlas.class);
-        assetManager.finishLoading(ANIMATION_PACK_PATH);
-        atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
-
         assetManager.load(LOGO_PATH, Texture.class);
+
+        assetManager.finishLoading(BGIMAGE_PATH);
+        assetManager.finishLoading(ANIMATION_PACK_PATH);
         assetManager.finishLoading(LOGO_PATH);
+
+        bgImage = assetManager.get(BGIMAGE_PATH, Texture.class);
+        atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
         logo = assetManager.get(LOGO_PATH, Texture.class);
 
         loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
@@ -96,10 +87,6 @@ public class LoadScreen implements IScreen {
     @Override
     public void onPause(ScreenManager<IScreen> screenManager) {
         batch.dispose();
-        atlas.dispose();
-
-        bgImage.dispose();
-        logo.dispose();
     }
 
     @Override
