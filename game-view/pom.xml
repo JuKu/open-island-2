@@ -57,7 +57,7 @@
 			<plugin>
 				<groupId>com.jukusoft</groupId>
 				<artifactId>gettext-maven-plugin</artifactId>
-				<version>${easy.i18n.version}</version>
+				<version>1.2.0</version>
 				<configuration>
 					<outputDir>../data/i18n/</outputDir>
 					<defaultDomain>messages</defaultDomain>

@@ -23,6 +23,7 @@ import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
+import com.jukusoft.i18n.I;
 import de.openislandgame.view.buttons.MenuButton;
 import de.openislandgame.view.selectboxes.ResolutionSelectBox;
 import de.openislandgame.view.settings.SettingsKeys;
@@ -129,14 +130,14 @@ public class OptionsScreen implements IScreen {
         menuTable.setBackground(skin.getDrawable("default-window"));
         menuTable.left().top().pad(TABLE_PADDING);
 
-        Label volumeTitleLabel = new Label("Volume Settings", skin);
+        Label volumeTitleLabel = new Label(I.tr("options", "volume_settings"), skin);
         volumeTitleLabel.setFontScale(1.3f);
 
         menuTable.add(volumeTitleLabel).colspan(3).left().expandX();
         menuTable.row().padTop(TOP_SECTION_LABEL_PADDING);
 
         // Music Volume Setting
-        Label musicVolumeLabel = new Label("Music Volume: ", skin);
+        Label musicVolumeLabel = new Label(I.tr("options", "music_volume"), skin);
         SettingsSlider musicVolumeSlider = new SettingsSlider(SettingsKeys.MUSIC_VOLUME, skin);
         SliderDisplayTextField musicVolumeTextField = new SliderDisplayTextField(SettingsKeys.MUSIC_VOLUME, skin, musicVolumeSlider);
 
@@ -146,7 +147,7 @@ public class OptionsScreen implements IScreen {
         menuTable.row();
 
         // Sound Volume Setting
-        Label soundVolumeLabel = new Label("Sound Volume: ", skin);
+        Label soundVolumeLabel = new Label(I.tr("options", "sound_volume"), skin);
         SettingsSlider soundVolumeSlider = new SettingsSlider(SettingsKeys.SOUND_VOLUME, skin);
         SliderDisplayTextField soundVolumeTextField = new SliderDisplayTextField(SettingsKeys.SOUND_VOLUME, skin, soundVolumeSlider);
 
@@ -156,7 +157,7 @@ public class OptionsScreen implements IScreen {
         menuTable.row();
 
         // Speech Volume Setting
-        Label speechVolumeLabel = new Label("Speech Volume: ", skin);
+        Label speechVolumeLabel = new Label(I.tr("options", "speech_volume"), skin);
         SettingsSlider speechVolumeSlider = new SettingsSlider(SettingsKeys.SPEECH_VOLUME, skin);
         SliderDisplayTextField speechVolumeTextField = new SliderDisplayTextField(SettingsKeys.SPEECH_VOLUME, skin, speechVolumeSlider);
 
@@ -166,14 +167,14 @@ public class OptionsScreen implements IScreen {
         menuTable.row();
 
         // Graphics Menu
-        Label graphicsTitleLabel = new Label("Graphics Settings", skin);
+        Label graphicsTitleLabel = new Label(I.tr("options", "graphics_settings"), skin);
         graphicsTitleLabel.setFontScale(1.3f);
 
         menuTable.add(graphicsTitleLabel).colspan(3).left().expandX();
         menuTable.row().padTop(TOP_SECTION_LABEL_PADDING);
 
         // resolution setting
-        Label resolutionLabel = new Label("Resolution: ", skin);
+        Label resolutionLabel = new Label(I.tr("options", "resolution"), skin);
         ResolutionSelectBox resolutionSelectBox = new ResolutionSelectBox(skin);
 
         menuTable.add(resolutionLabel).left().expandX().pad(CELL_PADDING);
@@ -181,7 +182,7 @@ public class OptionsScreen implements IScreen {
         menuTable.row();
 
         // full screen setting
-        Label fullScreenLabel = new Label("Full Screen: ", skin);
+        Label fullScreenLabel = new Label(I.tr("options", "full_screen"), skin);
         CheckBox fullScreenCheckBox = new CheckBox("", skin);
         boolean isFullScreen = Config.getBool("Settings", "fullscreen");
         fullScreenCheckBox.setChecked(isFullScreen);
@@ -199,7 +200,7 @@ public class OptionsScreen implements IScreen {
 
         // table for exit button
         Table exitTable = new Table();
-        MenuButton exitButton = new MenuButton("Back to Menu", skin, hoverSound);
+        MenuButton exitButton = new MenuButton(I.tr("options", "back_to_menu"), skin, hoverSound);
         exitButton.setOnClickNewScreen(screenManager, Screens.MAIN_MENU_SCREEN);
         exitTable.add(exitButton).width(EXIT_BUTTON_WIDTH).height(EXIT_BUTTON_HEIGHT).pad(EXIT_BUTTON_PAD);
 
