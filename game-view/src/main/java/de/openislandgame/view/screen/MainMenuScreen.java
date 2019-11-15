@@ -23,6 +23,7 @@ import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.backgrounds.ParallaxBackground;
+import com.jukusoft.i18n.I;
 import de.openislandgame.view.buttons.MenuButton;
 import org.graalvm.compiler.nodes.java.PluginFactory_ArrayLengthNode;
 
@@ -122,12 +123,12 @@ public class MainMenuScreen implements IScreen {
         Table menuTable = new Table();
 
         // continue button setup
-        MenuButton continueButton = new MenuButton("Continue", skin, hoverSound);
+        MenuButton continueButton = new MenuButton(I.tr("mainmenu", "continue"), skin, hoverSound);
         menuTable.add(continueButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // new game button setup
-        MenuButton newGameButton = new MenuButton("New Game", skin, hoverSound);
+        MenuButton newGameButton = new MenuButton(I.tr("mainmenu", "new_game"), skin, hoverSound);
         menuTable.add(newGameButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 

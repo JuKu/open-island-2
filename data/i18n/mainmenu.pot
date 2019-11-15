@@ -1,0 +1,26 @@
+# Open Island Game
+#
+# Attention! Don't edit this file manually! This file is auto generated and will be overriden!
+#
+# Copyright (c) 2019 JuKuSoft.com
+# This file is distributed under the same license as the open-island-view package.
+# JuKu, David, 2019.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0.0-SNAPSHOT\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Auto generated file\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: file MainMenuScreen.java line 1
+msgid "continue"
+msgstr "continue"
+
+#: file MainMenuScreen.java line 1
+msgid "new_game"
+msgstr "new_game"
