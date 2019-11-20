@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.jukusoft.engine2d.basegame.i18n.I18NHelper;
 import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.i18n.I;
 import de.openislandgame.view.languages.Languages;
@@ -18,12 +19,13 @@ public class LanguageSelectBox extends SelectBox<String> {
     private static final Map<String, String> LANGUAGE_TO_SHORT = new HashMap<>();
     private static final Map<String, String> SHORT_TO_LANGUAGE = new HashMap<>();
 
-    //TODO: remove this hardcoded constants and load them from a config file or the specific i18n directories
     static {
-        LANGUAGE_TO_SHORT.put("Deutsch", "de");
-        LANGUAGE_TO_SHORT.put("English", "en");
-        SHORT_TO_LANGUAGE.put("de", "Deutsch");
-        SHORT_TO_LANGUAGE.put("en", "English");
+        I18NHelper.listAvailableLanguagePacks()
+                .stream()
+                .forEach(langPack -> {
+                    LANGUAGE_TO_SHORT.put(langPack.getTitle(), langPack.getToken());
+                    SHORT_TO_LANGUAGE.put(langPack.getToken(), langPack.getTitle());
+                });
     }
 
     public LanguageSelectBox(Skin skin) {
