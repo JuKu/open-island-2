@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.jukusoft.engine2d.core.config.Config;
+import com.jukusoft.i18n.I;
 import de.openislandgame.view.languages.Languages;
 import de.openislandgame.view.resolutions.Resolution;
 
@@ -36,7 +37,10 @@ public class LanguageSelectBox extends SelectBox<String> {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 String selectedLang = getSelected();
 
-                Config.set(SETTINGS_STRING, SETTINGS_LANG_TOKEN, LANGUAGE_TO_SHORT.get(selectedLang));
+                String selectedLangToken = LANGUAGE_TO_SHORT.get(selectedLang);
+
+                I.setLanguage(selectedLangToken);
+                Config.set(SETTINGS_STRING, SETTINGS_LANG_TOKEN, selectedLangToken);
             }
         });
     }

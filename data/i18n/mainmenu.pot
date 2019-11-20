@@ -17,34 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: file MainMenuScreen.java line 124
+#: file MainMenuScreen.java line 125
 msgid "continue"
 msgstr "continue"
 
-#: file MainMenuScreen.java line 129
+#: file MainMenuScreen.java line 130
 msgid "new_game"
 msgstr "new_game"
 
-#: file MainMenuScreen.java line 134
+#: file MainMenuScreen.java line 135
 msgid "load_game"
 msgstr "load_game"
 
-#: file MainMenuScreen.java line 139
+#: file MainMenuScreen.java line 140
 msgid "campaign"
 msgstr "campaign"
 
-#: file MainMenuScreen.java line 144
+#: file MainMenuScreen.java line 145
 msgid "settings"
 msgstr "settings"
 
-#: file MainMenuScreen.java line 150
+#: file MainMenuScreen.java line 151
 msgid "credits"
 msgstr "credits"
 
-#: file MainMenuScreen.java line 157
+#: file MainMenuScreen.java line 158
 msgid "replay"
 msgstr "replay"
 
-#: file MainMenuScreen.java line 163
+#: file MainMenuScreen.java line 164
 msgid "exit_game"
 msgstr "exit_game"

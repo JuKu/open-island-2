@@ -49,5 +49,13 @@ msgid "full_screen"
 msgstr "Full Screen"
 
 #: file OptionsScreen.java line 203
+msgid "language_settings"
+msgstr "Language Settings"
+
+#: file OptionsScreen.java line 209
+msgid "language"
+msgstr "Language"
+
+#: file OptionsScreen.java line 203
 msgid "back_to_menu"
 msgstr "Back to Menu"

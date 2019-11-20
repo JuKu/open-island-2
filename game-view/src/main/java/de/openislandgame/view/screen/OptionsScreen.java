@@ -200,13 +200,13 @@ public class OptionsScreen implements IScreen {
         menuTable.row();
 
         // Language Menu
-        Label languageTitleLabel = new Label("Language Settings", skin);
+        Label languageTitleLabel = new Label(I.tr("options", "language_settings"), skin);
         languageTitleLabel.setFontScale(1.3f);
         menuTable.add(languageTitleLabel).colspan(3).left().expandX();
         menuTable.row().padTop(TOP_SECTION_LABEL_PADDING);
 
         // language option
-        Label languageLabel = new Label("Language", skin);
+        Label languageLabel = new Label(I.tr("options", "language"), skin);
         LanguageSelectBox languageSelectBox = new LanguageSelectBox(skin);
         menuTable.add(languageLabel).left().expandX().pad(CELL_PADDING);
         menuTable.add(languageSelectBox).pad(CELL_PADDING);

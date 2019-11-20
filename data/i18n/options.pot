@@ -17,34 +17,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: file OptionsScreen.java line 133
+#: file OptionsScreen.java line 134
 msgid "volume_settings"
 msgstr "volume_settings"
 
-#: file OptionsScreen.java line 140
+#: file OptionsScreen.java line 141
 msgid "music_volume"
 msgstr "music_volume"
 
-#: file OptionsScreen.java line 150
+#: file OptionsScreen.java line 151
 msgid "sound_volume"
 msgstr "sound_volume"
 
-#: file OptionsScreen.java line 160
+#: file OptionsScreen.java line 161
 msgid "speech_volume"
 msgstr "speech_volume"
 
-#: file OptionsScreen.java line 170
+#: file OptionsScreen.java line 171
 msgid "graphics_settings"
 msgstr "graphics_settings"
 
-#: file OptionsScreen.java line 177
+#: file OptionsScreen.java line 178
 msgid "resolution"
 msgstr "resolution"
 
-#: file OptionsScreen.java line 185
+#: file OptionsScreen.java line 186
 msgid "full_screen"
 msgstr "full_screen"
 
 #: file OptionsScreen.java line 203
+msgid "language_settings"
+msgstr "language_settings"
+
+#: file OptionsScreen.java line 209
+msgid "language"
+msgstr "language"
+
+#: file OptionsScreen.java line 217
 msgid "back_to_menu"
 msgstr "back_to_menu"
