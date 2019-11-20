@@ -436,3 +436,5 @@ data/maindata
 data/mods
 data/plugins
 *bfg*
+
+install/target
