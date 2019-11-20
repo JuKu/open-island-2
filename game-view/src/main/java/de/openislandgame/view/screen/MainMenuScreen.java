@@ -63,7 +63,7 @@ public class MainMenuScreen implements IScreen {
     private static final String BUTTON_SKIN_PATH = "ui/uiskin.json";
     private static final String SELECT_SOUND_PATH = "sound/menu_selection_click/menu_selection_click_16bit.wav";
     private static final String PARALLAX_BASE_PATH = "bg/parallax/Hills_";
-    private static final String MUSIC_PATH = "music/SnowyForest.mp3";
+    private static final String MUSIC_PATH = "music/mainmenu/SnowyForest.mp3";
 
     @Override
     public void onStart(ScreenManager<IScreen> screenManager) {
