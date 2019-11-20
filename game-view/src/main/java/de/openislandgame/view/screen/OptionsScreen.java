@@ -50,7 +50,7 @@ public class OptionsScreen implements IScreen {
     private static final String UI_ATLAS_PATH = "ui/uiskin.atlas";
     private static final String UI_SKIN_PATH = "ui/uiskin.json";
     private static final String BGIMAGE_PATH = "bg/flat-field-bg2.jpg";
-    private static final String MUSIC_PATH = "music/SnowyForest.mp3";
+    private static final String MUSIC_PATH = "music/options/SnowyForest.mp3";
     private static final String SELECT_SOUND_PATH = "sound/menu_selection_click/menu_selection_click_16bit.wav";
 
     // display text field props
