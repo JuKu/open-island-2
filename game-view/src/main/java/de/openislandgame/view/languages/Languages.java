@@ -1,15 +1,21 @@
 package de.openislandgame.view.languages;
 
 import com.badlogic.gdx.utils.Array;
+import com.jukusoft.engine2d.basegame.i18n.I18NHelper;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Languages {
-    private static final String LANG_DE = "Deutsch";
-    private static final String LANG_EN = "English";
 
     public static Array<String> getAll() {
-        Array<String> allResolutions = new Array<>();
-        allResolutions.add(LANG_DE);
-        allResolutions.add(LANG_EN);
-        return allResolutions;
+        Array allLanguages = new Array();
+        I18NHelper.listAvailableLanguagePacks()
+                .stream()
+                .map(langPack -> langPack.getTitle())
+                .forEach(langTitle -> allLanguages.add(langTitle));
+
+        return allLanguages;
     }
+
 }
