@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jukusoft.engine2d.basegame.replay.ReplayMode;
@@ -21,6 +22,7 @@ import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
+import de.openislandgame.view.backgrounds.ParallaxBackground;
 import com.jukusoft.i18n.I;
 import de.openislandgame.view.buttons.MenuButton;
 
@@ -44,7 +46,7 @@ public class MainMenuScreen implements IScreen {
     private final int menuPad = 50;
 
     // background texture
-    private Texture bgImage;
+    private Array<Texture> bgImages;
 
     // music
     private Music music;
@@ -52,11 +54,15 @@ public class MainMenuScreen implements IScreen {
     // clicking sound for button hover
     private Sound hoverSound;
 
+    // parallax backgorund
+    private ParallaxBackground parallaxBackground;
+    private final float speed = 20f;
+
     // click sound path
     private static final String BUTTON_ATLAS_PATH = "ui/uiskin.atlas";
     private static final String BUTTON_SKIN_PATH = "ui/uiskin.json";
     private static final String SELECT_SOUND_PATH = "sound/menu_selection_click/menu_selection_click_16bit.wav";
-    private static final String BGIMAGE_PATH = "bg/flat-field-bg2.jpg";
+    private static final String PARALLAX_BASE_PATH = "bg/parallax/Hills_";
     private static final String MUSIC_PATH = "music/SnowyForest.mp3";
 
     @Override
@@ -85,15 +91,14 @@ public class MainMenuScreen implements IScreen {
         stage = new Stage(viewport, batch);
 
         // load assets
+        loadBgImagesAndParallaxBackground();
         assetManager.load(MUSIC_PATH, Music.class);
-        assetManager.load(BGIMAGE_PATH, Texture.class);
         assetManager.load(SELECT_SOUND_PATH, Sound.class);
         assetManager.load(BUTTON_ATLAS_PATH, TextureAtlas.class);
         assetManager.load(BUTTON_SKIN_PATH, Skin.class, new SkinLoader.SkinParameter(BUTTON_ATLAS_PATH));
 
         // wait
         assetManager.finishLoading(MUSIC_PATH);
-        assetManager.finishLoading(BGIMAGE_PATH);
         assetManager.finishLoading(SELECT_SOUND_PATH);
         assetManager.finishLoading(BUTTON_ATLAS_PATH);
         assetManager.finishLoading(BUTTON_SKIN_PATH);
@@ -105,8 +110,6 @@ public class MainMenuScreen implements IScreen {
         // get and set sound
         hoverSound = assetManager.get(SELECT_SOUND_PATH);
 
-        // get and set bg image
-        bgImage = assetManager.get(BGIMAGE_PATH);
 
         // get and set atlas and skin
         atlas = assetManager.get(BUTTON_ATLAS_PATH);
@@ -169,10 +172,11 @@ public class MainMenuScreen implements IScreen {
         menuTable.add(exitButton).size(buttonWidth, buttonHeight).pad(buttonPad);
 
         rootTable.add(menuTable);
+
+        stage.addActor(parallaxBackground);
         stage.addActor(rootTable);
 
         InputManager.getInstance().addFirst(stage);
-
     }
 
     @Override
@@ -190,8 +194,8 @@ public class MainMenuScreen implements IScreen {
         batch.dispose();
 
         //TODO: unlad assets
+        unloadBgImages();
         assetManager.unload(MUSIC_PATH);
-        assetManager.unload(BGIMAGE_PATH);
         assetManager.unload(SELECT_SOUND_PATH);
         assetManager.unload(BUTTON_ATLAS_PATH);
         assetManager.unload(BUTTON_SKIN_PATH);
@@ -200,6 +204,7 @@ public class MainMenuScreen implements IScreen {
     @Override
     public void onResize(int oldWidth, int oldHeight, int newWidth, int newHeight) {
         stage.getViewport().update(newWidth, newHeight, true);
+        parallaxBackground.resize(newWidth, newHeight);
     }
 
     @Override
@@ -211,12 +216,31 @@ public class MainMenuScreen implements IScreen {
     public void draw(float delta) {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        batch.draw(bgImage, 0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
-        batch.end();
 
         stage.act(delta);
         stage.draw();
+    }
+
+    private void loadBgImagesAndParallaxBackground(){
+        bgImages = new Array<>();
+        for (int i=0; i < 6; i++){
+            assetManager.load(getBgLayerName(i), Texture.class);
+            assetManager.finishLoading(getBgLayerName(i));
+            Texture bgImage = assetManager.get(getBgLayerName(i));
+            bgImages.add(bgImage);
+        }
+        parallaxBackground = new ParallaxBackground(bgImages);
+        parallaxBackground.setSpeed(speed);
+    }
+
+    private void unloadBgImages(){
+        for (int i = 0; i < 6; i++){
+            assetManager.unload(getBgLayerName(i));
+        }
+    }
+
+    private String getBgLayerName(int i){
+        return PARALLAX_BASE_PATH + i + ".png";
     }
     
 }
