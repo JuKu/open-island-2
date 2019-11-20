@@ -24,7 +24,6 @@ import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
 import de.openislandgame.view.backgrounds.ParallaxBackground;
 import de.openislandgame.view.buttons.MenuButton;
-import org.graalvm.compiler.nodes.java.PluginFactory_ArrayLengthNode;
 
 public class MainMenuScreen implements IScreen {
 
