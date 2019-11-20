@@ -132,36 +132,36 @@ public class MainMenuScreen implements IScreen {
         menuTable.row();
 
         // load game button setup
-        MenuButton loadGameButton = new MenuButton("Load Game", skin, hoverSound);
+        MenuButton loadGameButton = new MenuButton(I.tr("mainmenu", "load_game"), skin, hoverSound);
         menuTable.add(loadGameButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // campaign button setup
-        MenuButton campaignButton = new MenuButton("Campaign", skin, hoverSound);
+        MenuButton campaignButton = new MenuButton(I.tr("mainmenu", "campaign"), skin, hoverSound);
         menuTable.add(campaignButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // settings button setup
-        MenuButton settingsButton = new MenuButton("Settings", skin, hoverSound);
+        MenuButton settingsButton = new MenuButton(I.tr("mainmenu", "settings"), skin, hoverSound);
         menuTable.add(settingsButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         settingsButton.setOnClickNewScreen(screenManager, Screens.OPTIONS_SCREEN);
         menuTable.row();
 
         // credits button setup
-        MenuButton creditsButton = new MenuButton("Credits", skin, hoverSound);
+        MenuButton creditsButton = new MenuButton(I.tr("mainmenu", "credits"), skin, hoverSound);
         creditsButton.setOnClickNewScreen(screenManager, Screens.CREDITS_SCREEN);
         menuTable.add(creditsButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
         // replay button
         if (ReplayMode.isEnabled()){
-            MenuButton replayButton = new MenuButton("Replay", skin, hoverSound);
+            MenuButton replayButton = new MenuButton(I.tr("mainmenu", "replay"), skin, hoverSound);
             menuTable.add(replayButton).size(buttonWidth, buttonHeight).pad(buttonPad);
             menuTable.row();
         }
 
         // exit button setup
-        MenuButton exitButton = new MenuButton("Exit Game", skin, hoverSound);
+        MenuButton exitButton = new MenuButton(I.tr("mainmenu", "exit_game"), skin, hoverSound);
         exitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
