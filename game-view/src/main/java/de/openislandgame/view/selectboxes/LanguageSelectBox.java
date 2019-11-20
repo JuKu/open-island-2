@@ -16,6 +16,8 @@ public class LanguageSelectBox extends SelectBox<String> {
     private static final String SETTINGS_LANG_TOKEN = "token";
     private static final Map<String, String> LANGUAGE_TO_SHORT = new HashMap<>();
     private static final Map<String, String> SHORT_TO_LANGUAGE = new HashMap<>();
+
+    //TODO: remove this hardcoded constants and load them from a config file or the specific i18n directories
     static {
         LANGUAGE_TO_SHORT.put("Deutsch", "de");
         LANGUAGE_TO_SHORT.put("English", "en");
