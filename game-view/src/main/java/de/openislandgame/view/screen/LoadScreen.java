@@ -81,7 +81,7 @@ public class LoadScreen implements IScreen {
         atlas = assetManager.get(ANIMATION_PACK_PATH, TextureAtlas.class);
         logo = assetManager.get(LOGO_PATH, Texture.class);
 
-        loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
+        loadingAnimation = new Animation<>(1 / 30f, atlas.getRegions());
     }
 
     @Override
@@ -114,14 +114,14 @@ public class LoadScreen implements IScreen {
         batch.begin();
         // batch.draw(bgImage, 0, 0, viewport.getScreenWidth(), viewport.getScreenHeight());
         batch.draw(logo,
-                viewportWidth/2f - logoWidth/2f, viewportHeight/2f - logoHeight/2f,
+                viewportWidth / 2f - logoWidth / 2f, viewportHeight / 2f - logoHeight / 2f,
                 logoWidth, logoHeight);
 
         elapsedTime += delta;
         TextureRegion frame = loadingAnimation.getKeyFrame(elapsedTime, true);
         batch.draw(
                 frame,
-                viewportWidth- loadAnimationWidthAndHeight - animationPad,
+                viewportWidth - loadAnimationWidthAndHeight - animationPad,
                 animationPad, loadAnimationWidthAndHeight, loadAnimationWidthAndHeight);
 
         batch.end();

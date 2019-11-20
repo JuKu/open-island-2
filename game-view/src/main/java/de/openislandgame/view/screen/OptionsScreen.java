@@ -88,7 +88,7 @@ public class OptionsScreen implements IScreen {
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         viewport.apply();
-        camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
         stage = new Stage(viewport, batch);
 

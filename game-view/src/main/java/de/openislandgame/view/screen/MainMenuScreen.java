@@ -22,8 +22,8 @@ import com.jukusoft.engine2d.input.InputManager;
 import com.jukusoft.engine2d.view.assets.assetmanager.GameAssetManager;
 import com.jukusoft.engine2d.view.screens.IScreen;
 import com.jukusoft.engine2d.view.screens.ScreenManager;
-import de.openislandgame.view.backgrounds.ParallaxBackground;
 import com.jukusoft.i18n.I;
+import de.openislandgame.view.backgrounds.ParallaxBackground;
 import de.openislandgame.view.buttons.MenuButton;
 
 public class MainMenuScreen implements IScreen {
@@ -86,7 +86,7 @@ public class MainMenuScreen implements IScreen {
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         viewport.apply();
-        camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
         stage = new Stage(viewport, batch);
 
@@ -154,7 +154,7 @@ public class MainMenuScreen implements IScreen {
         menuTable.row();
 
         // replay button
-        if (ReplayMode.isEnabled()){
+        if (ReplayMode.isEnabled()) {
             MenuButton replayButton = new MenuButton(I.tr("mainmenu", "replay"), skin, hoverSound);
             menuTable.add(replayButton).size(buttonWidth, buttonHeight).pad(buttonPad);
             menuTable.row();
@@ -162,7 +162,7 @@ public class MainMenuScreen implements IScreen {
 
         // exit button setup
         MenuButton exitButton = new MenuButton(I.tr("mainmenu", "exit_game"), skin, hoverSound);
-        exitButton.addListener(new ClickListener(){
+        exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -221,9 +221,9 @@ public class MainMenuScreen implements IScreen {
         stage.draw();
     }
 
-    private void loadBgImagesAndParallaxBackground(){
+    private void loadBgImagesAndParallaxBackground() {
         bgImages = new Array<>();
-        for (int i=0; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
             assetManager.load(getBgLayerName(i), Texture.class);
             assetManager.finishLoading(getBgLayerName(i));
             Texture bgImage = assetManager.get(getBgLayerName(i));
@@ -233,14 +233,14 @@ public class MainMenuScreen implements IScreen {
         parallaxBackground.setSpeed(speed);
     }
 
-    private void unloadBgImages(){
-        for (int i = 0; i < 6; i++){
+    private void unloadBgImages() {
+        for (int i = 0; i < 6; i++) {
             assetManager.unload(getBgLayerName(i));
         }
     }
 
-    private String getBgLayerName(int i){
+    private String getBgLayerName(int i) {
         return PARALLAX_BASE_PATH + i + ".png";
     }
-    
+
 }

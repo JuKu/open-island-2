@@ -7,12 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.jukusoft.engine2d.core.config.Config;
 import com.jukusoft.i18n.I;
 import de.openislandgame.view.languages.Languages;
-import de.openislandgame.view.resolutions.Resolution;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LanguageSelectBox extends SelectBox<String> {
+
     private static final String SETTINGS_STRING = "I18N";
     private static final String SETTINGS_LANG_TOKEN = "token";
     private static final Map<String, String> LANGUAGE_TO_SHORT = new HashMap<>();
@@ -44,4 +44,5 @@ public class LanguageSelectBox extends SelectBox<String> {
             }
         });
     }
+
 }

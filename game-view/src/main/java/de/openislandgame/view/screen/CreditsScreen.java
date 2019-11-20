@@ -51,8 +51,7 @@ public class CreditsScreen implements IScreen {
     public void onStart(ScreenManager<IScreen> screenManager) {
         try {
             generateCreditLines();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -111,7 +110,7 @@ public class CreditsScreen implements IScreen {
 
     @Override
     public void update(ScreenManager<IScreen> screenManager, float v) {
-        if (Gdx.input.isTouched()){
+        if (Gdx.input.isTouched()) {
             screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
         }
     }
@@ -142,7 +141,7 @@ public class CreditsScreen implements IScreen {
         batch.end();
 
         // update start position
-        startY += textSpeed*delta;
+        startY += textSpeed * delta;
     }
 
     private void generateCreditLines() throws IOException {
@@ -152,7 +151,7 @@ public class CreditsScreen implements IScreen {
 
         String lastLine = "";
 
-        for (String line: linesFromFile){
+        for (String line : linesFromFile) {
             line = line.replace("\\", "");
 
             if (lastLine.equals("") && line.equals("")) {
@@ -161,7 +160,7 @@ public class CreditsScreen implements IScreen {
 
             lines.add(line);
 
-            if (line.contains("#")){
+            if (line.contains("#")) {
                 lines.add("");
 
                 line = "";

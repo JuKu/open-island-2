@@ -11,19 +11,19 @@ import com.jukusoft.engine2d.view.screens.ScreenManager;
 
 public class MenuButton extends TextButton {
 
-    public MenuButton(String text, Skin skin, Sound hoverSound){
+    public MenuButton(String text, Skin skin, Sound hoverSound) {
         super(text, skin);
         setHoverSound(hoverSound);
     }
 
-    public void setHoverSound(Sound hoverSound){
-        ClickListener hoverListener = new ClickListener(){
+    public void setHoverSound(Sound hoverSound) {
+        ClickListener hoverListener = new ClickListener() {
             boolean playing = false;
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);
-                if (!playing){
+                if (!playing) {
                     hoverSound.play(1F);
                     playing = true;
                 }
@@ -39,8 +39,8 @@ public class MenuButton extends TextButton {
         addListener(hoverListener);
     }
 
-    public void setOnClickNewScreen(ScreenManager<IScreen> screenManager, String newScreen){
-        addListener(new ClickListener(){
+    public void setOnClickNewScreen(ScreenManager<IScreen> screenManager, String newScreen) {
+        addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);

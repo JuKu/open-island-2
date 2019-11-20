@@ -18,22 +18,22 @@ public class SliderDisplayTextField extends TextField {
         super("", skin);
         this.settingsKey = settingsKey;
         float settingsValue = Config.getFloat(SETTINGS_STRING, settingsKey);
-        String settingsString = Integer.toString((int) (settingsValue*100));
+        String settingsString = Integer.toString((int) (settingsValue * 100));
         setText(settingsString);
         setDisabled(true);
         setAlignment(Align.center);
     }
 
-    public SliderDisplayTextField(String settingsKey, Skin skin, Slider slider){
+    public SliderDisplayTextField(String settingsKey, Skin skin, Slider slider) {
         this(settingsKey, skin);
         setObservedSlider(slider);
     }
 
-    public void setObservedSlider(Slider slider){
+    public void setObservedSlider(Slider slider) {
         slider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                int sliderValue = (int) (slider.getValue()*100);
+                int sliderValue = (int) (slider.getValue() * 100);
                 String text = Integer.toString(sliderValue);
 
                 Config.set(SETTINGS_STRING, settingsKey, String.valueOf(slider.getValue()));

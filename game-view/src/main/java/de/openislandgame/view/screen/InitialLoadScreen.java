@@ -104,7 +104,7 @@ public class InitialLoadScreen implements IScreen {
             ErrorHandler.shutdownWithException(e);
         }
 
-        loadingAnimation = new Animation<>(1/30f, atlas.getRegions());
+        loadingAnimation = new Animation<>(1 / 30f, atlas.getRegions());
 
         //TODO: add code here
     }
@@ -137,7 +137,7 @@ public class InitialLoadScreen implements IScreen {
             }
         }
 
-        if (elapsedTime > 5 && loadingProcessor.hasFinished()){
+        if (elapsedTime > 5 && loadingProcessor.hasFinished()) {
             screenManager.leaveAllAndEnter(Screens.MAIN_MENU_SCREEN);
         }
     }
@@ -164,7 +164,7 @@ public class InitialLoadScreen implements IScreen {
         TextureRegion frame = loadingAnimation.getKeyFrame(elapsedTime, true);
         batch.draw(
                 frame,
-                viewportWidth- loadAnimationWidthAndHeight - animationPad,
+                viewportWidth - loadAnimationWidthAndHeight - animationPad,
                 animationPad, loadAnimationWidthAndHeight, loadAnimationWidthAndHeight);
 
         batch.end();
