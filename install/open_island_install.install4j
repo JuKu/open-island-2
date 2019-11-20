@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <install4j version="8.0.2" transformSequenceNumber="8">
-  <directoryPresets config="." />
-  <application name="Open Island Game" applicationId="6057-6051-5483-4965" shortName="OpenIsland" publisher="JuKuSoft" publisherWeb="http://jukusoft.com" version="0.0.1" allPathsRelative="true" backupOnSave="true" autoSave="true" macVolumeId="44024d17298c9c57" javaMinVersion="1.8.0" allowBetaVM="true" jdkMode="jdk" jdkName="JDK 12.0">
+  <directoryPresets config="./target" />
+  <application name="Open Island Game" applicationId="6057-6051-5483-4965" mediaDir="./target" shortName="OpenIsland" publisher="JuKuSoft" publisherWeb="http://jukusoft.com" version="0.0.1" allPathsRelative="true" backupOnSave="true" autoSave="true" macVolumeId="44024d17298c9c57" javaMinVersion="1.8.0" allowBetaVM="true" jdkMode="jdk" jdkName="JDK 12.0">
     <languages>
       <principalLanguage id="en" customLocalizationFile="./localization.utf8" />
       <additionalLanguages>
@@ -437,4 +437,14 @@ return console.askYesNo(message, true);
       </group>
     </styles>
   </installerGui>
+  <mediaSets>
+    <windows name="Windows" id="59">
+      <jreBundle jreBundleSource="generated">
+        <modules>
+          <module name="java.base" />
+          <module name="java.se" />
+        </modules>
+      </jreBundle>
+    </windows>
+  </mediaSets>
 </install4j>
