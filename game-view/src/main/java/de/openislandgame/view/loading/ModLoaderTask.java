@@ -18,7 +18,9 @@ public class ModLoaderTask implements LoadingTask {
 
     @Override
     public void load() throws Exception {
-        Utils.printSection("Mod Loader");
+        //this task is executed on game engine startup now
+
+        /*Utils.printSection("Mod Loader");
 
         //load mods
 
@@ -29,7 +31,7 @@ public class ModLoaderTask implements LoadingTask {
             File modDir = new File(FilePath.parse(dir));
             Log.i(LOG_TAG, "load mods from directory: " + modDir.getAbsolutePath());
             ModManager.getInstance().loadFromDir(modDir);
-        }
+        }*/
     }
 
 }

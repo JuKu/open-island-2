@@ -9,6 +9,7 @@ import com.jukusoft.engine2d.core.subsystem.SubSystemManager;
 import com.jukusoft.engine2d.core.utils.Threads;
 import com.jukusoft.engine2d.input.subsystem.InputSubSystem;
 import com.jukusoft.engine2d.plugin.PluginApi;
+import com.jukusoft.engine2d.sound.subsystem.SoundEngineSubSystem;
 import de.openislandgame.view.subsystem.ScreenSubSystemFactory;
 
 import java.util.Objects;
@@ -46,6 +47,9 @@ public class GameFactory implements BaseGameFactory {
 
                     //add game-view-layer / human views
                     manager.addSubSystem(ScreenSubSystemFactory.create(), Threads.UI_THREAD);
+
+                    //add sound engine
+                    manager.addSubSystem(new SoundEngineSubSystem(), Threads.UI_THREAD);
                 };
             }
 

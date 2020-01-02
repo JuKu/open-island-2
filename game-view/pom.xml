@@ -31,6 +31,12 @@
 			<version>${game.engine.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.jukusoft</groupId>
+			<artifactId>engine2d-game-sound</artifactId>
+			<version>${game.engine.version}</version>
+		</dependency>
+
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-freetype</artifactId>
