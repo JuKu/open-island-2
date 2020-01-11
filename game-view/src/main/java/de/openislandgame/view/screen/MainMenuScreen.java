@@ -133,6 +133,7 @@ public class MainMenuScreen implements IScreen {
 
         // load game button setup
         MenuButton loadGameButton = new MenuButton(I.tr("mainmenu", "load_game"), skin, hoverSound);
+        loadGameButton.setOnClickNewScreen(screenManager, Screens.LOAD_GAME_SCREEN);
         menuTable.add(loadGameButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 
