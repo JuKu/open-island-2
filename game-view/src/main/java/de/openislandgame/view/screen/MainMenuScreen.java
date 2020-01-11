@@ -128,6 +128,7 @@ public class MainMenuScreen implements IScreen {
 
         // new game button setup
         MenuButton newGameButton = new MenuButton(I.tr("mainmenu", "new_game"), skin, hoverSound);
+        newGameButton.setOnClickNewScreen(screenManager, Screens.NEW_GAME_SCREEN);
         menuTable.add(newGameButton).size(buttonWidth, buttonHeight).pad(buttonPad);
         menuTable.row();
 

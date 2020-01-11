@@ -1,0 +1,93 @@
+# Open Island Game
+#
+# Attention! Don't edit this file manually! This file is auto generated and will be overriden!
+#
+# Copyright (c) 2019 JuKuSoft.com
+# This file is distributed under the same license as the open-island-view package.
+# JuKu, David, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0.0-SNAPSHOT\n"
+"PO-Revision-Date: 2020-01-11 11:20+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.2.4\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
+
+#: file NewGameScreen.java line 136
+msgid "settings"
+msgstr "Spieleinstellungen"
+
+#: file NewGameScreen.java line 145
+msgid "difficulty_level"
+msgstr "Schwierigkeitsgrad"
+
+#: file NewGameScreen.java line 148
+msgid "easy"
+msgstr "Einfach"
+
+#: file NewGameScreen.java line 149
+msgid "middle"
+msgstr "Mittel"
+
+#: file NewGameScreen.java line 150
+msgid "hard"
+msgstr "Schwer"
+
+#: file NewGameScreen.java line 158
+msgid "start_condition"
+msgstr "Startbedingungen"
+
+#: file NewGameScreen.java line 161
+msgid "start_on_island"
+msgstr "Starte auf Insel"
+
+#: file NewGameScreen.java line 162
+msgid "start_with_ship"
+msgstr "Starte mit Schiff"
+
+#: file NewGameScreen.java line 170
+msgid "map"
+msgstr "Karte"
+
+#: file NewGameScreen.java line 174
+msgid "map_1"
+msgstr "Karte 1"
+
+#: file NewGameScreen.java line 175
+msgid "map_2"
+msgstr "Karte 2"
+
+#: file NewGameScreen.java line 182
+msgid "resources"
+msgstr "Ressourcen"
+
+#: file NewGameScreen.java line 185
+msgid "start_with_full_comptoir_and_ship"
+msgstr "Voller Kontor und Schiff"
+
+#: file NewGameScreen.java line 186
+msgid "start_with_full_comptoir"
+msgstr "Voller Kontor"
+
+#: file NewGameScreen.java line 187
+msgid "start_with_few_resources"
+msgstr "Wenige Ressourcen"
+
+#: file NewGameScreen.java line 194
+msgid "money"
+msgstr "Geld"
+
+#: file NewGameScreen.java line 205
+msgid "back_to_menu"
+msgstr "Zurück zum Menü"
+
+#: file NewGameScreen.java line 213
+msgid "start_game"
+msgstr "Starte Spiel"
