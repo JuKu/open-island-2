@@ -107,7 +107,7 @@
 							<outputDirectory>${basedir}/../data/maindata</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${basedir}/../../open-island-assets/generated</directory>
+									<directory>${basedir}/../../mmo-content/generated</directory>
 									<filtering>false</filtering><!-- Do not filter files with binary content like images! This will most likely result in corrupt output.  -->
 								</resource>
 							</resources>
