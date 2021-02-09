@@ -25,26 +25,26 @@ msgstr "continue"
 msgid "new_game"
 msgstr "new_game"
 
-#: file MainMenuScreen.java line 135
+#: file MainMenuScreen.java line 136
 msgid "load_game"
 msgstr "load_game"
 
-#: file MainMenuScreen.java line 140
+#: file MainMenuScreen.java line 141
 msgid "campaign"
 msgstr "campaign"
 
-#: file MainMenuScreen.java line 145
+#: file MainMenuScreen.java line 146
 msgid "settings"
 msgstr "settings"
 
-#: file MainMenuScreen.java line 151
+#: file MainMenuScreen.java line 152
 msgid "credits"
 msgstr "credits"
 
-#: file MainMenuScreen.java line 158
+#: file MainMenuScreen.java line 159
 msgid "replay"
 msgstr "replay"
 
-#: file MainMenuScreen.java line 164
+#: file MainMenuScreen.java line 165
 msgid "exit_game"
 msgstr "exit_game"
